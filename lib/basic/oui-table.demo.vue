@@ -14,7 +14,7 @@ const state = reactive({
 const columns: OuiTableColumn[] = [
   { title: '#', name: 'id', sortable: false },
   { title: 'One', name: 'one', sortable: true },
-  { title: 'Two', name: 'two', sortable: true, footer: 'Two feet' },
+  { title: 'Two', name: 'two', sortable: true, align: 'right', footer: 'Two feet' },
   { title: '', name: 'action', align: 'right' },
 ]
 
@@ -65,7 +65,7 @@ const menu = useMenu(row => [
         One foot
       </template>
       <template #header-one>
-        ONE
+        ONE-LONG-Title with break
       </template>
     </OuiTable>
   </div>

@@ -26,7 +26,8 @@
   left: 0;
   right: 0;
   top: 0;
-  height: var(--visible-height, 100%);
+  height: 100vh;
+  // height: var(--visible-height, 100%);
   z-index: -z-index-overlay;
   background: var(--modal-backdrop);
   cursor: default;
@@ -90,13 +91,15 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      max-height: inherit;
+      margin: 0;
+      padding: 0;
       width: 100%;
-      height: initial;
-      margin-top: 44;
+      height: 100%;
+      max-height: 100%;
+      // margin-top: 44;
       border-top-left-radius: var(--modal-radius);
       border-top-right-radius: var(--modal-radius);
-      padding-bottom: -safe-bottom;
+      background: yellow;
 
       .virtual-keyboard & {
         padding-bottom: 0;
@@ -104,6 +107,11 @@
         ._modal_footer {
           transition: border var(--modal-speed);
           --modal-separator: var(--t3-bg);
+          padding-bottom: var(--safe-bottom, 0);
+        }
+
+        ._modal_bottom_space {
+          height: calc(100vh - var(--visible-height, 0)) !important;
         }
       }
     }
@@ -167,6 +175,7 @@
     min-height: 32;
     padding-y: 16;
     padding-x: 16;
+    padding-bottom: calc(var(--safe-bottom, 0) + 16px);
     position: relative;
     display: block;
   }
