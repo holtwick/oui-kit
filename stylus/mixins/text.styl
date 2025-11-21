@@ -1,5 +1,10 @@
 @require "./base.styl";
 
+user-select(value) {
+  user-select: value;
+  -webkit-user-select: value;
+}
+
 font-size(value = base) {
   if value is a "unit" {
     font-size: rex(value);
