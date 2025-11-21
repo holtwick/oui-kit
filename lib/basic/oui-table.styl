@@ -55,12 +55,27 @@
     ._sortable {
       cursor: unquote("pointer");
       user-select: none;
-      padding-right: 16;
       position: relative;
+      padding-right: 16;
+    }
+
+    ._sortable[align=right] {
+      padding-right: 8;
+      padding-left: 16;
     }
 
     ._active {
       color: var(--p1-fg);
+    }
+
+    ._asc[align=right], ._desc[align=right] {
+      padding-right: 16;
+      padding-left: 8;
+    }
+
+    ._asc:after, ._desc:after {
+      position: absolute;
+      right: 4;
     }
 
     ._asc:after {

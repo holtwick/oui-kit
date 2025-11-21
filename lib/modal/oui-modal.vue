@@ -178,6 +178,7 @@ async function checkClose(e: OuiDraggableEvent) {
           <footer v-if="$slots.footer" class="oui-modal-footer footer _modal_footer">
             <slot name="footer" />
           </footer>
+          <div class="oui-modal-bottom-space _modal_bottom_space" />
         </OuiDraggable>
       </div>
     </Transition>

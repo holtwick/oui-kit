@@ -59,6 +59,7 @@ function doSelect(pos: number) {
               _desc: sortName === col.name && !sortAsc,
               _active: sortName === col.name,
             }"
+            :align="col.align ?? 'left'"
             @click="doToggleSort(col.name)"
           >
             <slot :name="`header-${col.name}`" v-bind="{ col, pos }">

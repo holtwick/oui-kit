@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useToggle } from '@vueuse/core'
+import { useScreenSafeArea, useToggle } from '@vueuse/core'
 import { watchEffect } from 'vue'
 import { OuiCheckbox, OuiText } from '@/lib'
 
@@ -22,6 +22,13 @@ watchEffect(() => {
 })
 
 const notSupported = !document.documentElement.classList.contains('oui-mobile-supported')
+
+const {
+  top,
+  right,
+  bottom,
+  left,
+} = useScreenSafeArea()
 </script>
 
 <template>
@@ -39,6 +46,15 @@ const notSupported = !document.documentElement.classList.contains('oui-mobile-su
         OuiMobile running
       </OuiCheckbox>
     </p>
+
+    <h3>Debug: Safe Area Insets</h3>
+    <ul>
+      <li><code>safe-area-inset-top:</code> {{ top }}</li>
+      <li><code>safe-area-inset-right:</code> {{ right }}</li>
+      <li><code>safe-area-inset-bottom:</code> {{ bottom }}</li>
+      <li><code>safe-area-inset-left:</code> {{ left }}</li>
+    </ul>
+
     <p>
       Test is here:
     </p>

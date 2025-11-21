@@ -2,6 +2,13 @@
 
 vendors = official;
 
+:root {
+  --safe-top = 0;
+  --safe-right = 0;
+  --safe-bottom = 0;
+  --safe-left = 0;
+}
+
 html.oui-mobile {
   --safe-top = env(safe-area-inset-top, 0);
   --safe-right = env(safe-area-inset-right, 0);
@@ -53,6 +60,6 @@ html.oui-mobile {
 
   input:focus, textarea:focus, [contenteditable]:focus {
     /* Avoids scroll issues on keyboard showup */
-    animation: iosPreventScrollingBugIssues 0.01s;
+    animation: iosPreventScrollingBugIssues 0.4s;
   }
 }

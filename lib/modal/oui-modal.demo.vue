@@ -52,6 +52,8 @@ const { width, height } = useWindowSize()
     </template>
     <template #default>
       <OuiText>
+        <p>Some text upfront.</p>
+        <p><OuiInput v-model="state.title" /></p>
         <template v-for="i in 100" :key="i">
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam possimus aut omnis perspiciatis consequuntur at accusantium? Voluptas ab ex quo, omnis, quidem, officiis corporis nostrum perspiciatis ea recusandae reprehenderit fugiat!</p>
         </template>
