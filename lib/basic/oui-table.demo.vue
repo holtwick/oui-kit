@@ -13,7 +13,7 @@ const state = reactive({
 
 const columns: OuiTableColumn[] = [
   { title: '#', name: 'id', sortable: false },
-  { title: 'One', name: 'one', sortable: true },
+  { title: 'One', name: 'one', sortable: true, grow: true },
   { title: 'Two', name: 'two', sortable: true, align: 'right', footer: 'Two feet' },
   { title: '', name: 'action', align: 'right' },
 ]

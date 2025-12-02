@@ -58,9 +58,8 @@ function doSelect(pos: number) {
               _asc: sortName === col.name && sortAsc,
               _desc: sortName === col.name && !sortAsc,
               _active: sortName === col.name,
-            }"
-            :align="col.align ?? 'left'"
-            @click="doToggleSort(col.name)"
+              _grow: col.grow === true,
+            }" :align="col.align ?? 'left'" @click="doToggleSort(col.name)"
           >
             <slot :name="`header-${col.name}`" v-bind="{ col, pos }">
               {{ col.title ?? col.name }}
@@ -76,14 +75,13 @@ function doSelect(pos: number) {
           :class="{
             _selectable: selectable,
             _active: modelSelected === rowPos,
-          }"
-          @click="doSelect(rowPos)"
-          @contextmenu.prevent="emit('context', item, rowPos, $event)"
+          }" @click="doSelect(rowPos)" @contextmenu.prevent="emit('context', item, rowPos, $event)"
         >
           <template v-for="col, pos in cols" :key="col.name">
             <td
-              :align="col.align ?? 'left'"
-              :valign="col.valign ?? 'top'"
+              :align="col.align ?? 'left'" :valign="col.valign ?? 'top'" :class="{
+                _grow: col.grow === true,
+              }"
             >
               <slot
                 :name="`col-${col.name}`" v-bind="{
@@ -91,7 +89,8 @@ function doSelect(pos: number) {
                   value: item[col.name],
                   col,
                   pos,
-                  item }"
+                  item,
+                }"
               >
                 {{ item[col.name] }}
               </slot>
