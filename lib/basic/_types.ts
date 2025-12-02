@@ -26,6 +26,7 @@ export interface OuiTableColumn<K = string> {
   width?: number
   minWidth?: number
   maxWidth?: number
+  grow?: boolean
 }
 
 // interface OuiDraggablePosition {
