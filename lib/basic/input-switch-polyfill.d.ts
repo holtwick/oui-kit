@@ -1,8 +1,6 @@
 // Type definitions for input-switch-polyfill
 declare module 'input-switch-polyfill' {
   // The polyfill is a side-effect only module
-  const polyfill: void
-  export default polyfill
 }
 
 declare module 'input-switch-polyfill/input-switch-polyfill.css' {
