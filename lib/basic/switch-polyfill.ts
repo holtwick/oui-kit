@@ -5,6 +5,8 @@
 import 'input-switch-polyfill/input-switch-polyfill.css'
 
 // Only load the polyfill if the browser doesn't support the switch attribute
-if (!('switch' in HTMLInputElement.prototype)) {
-  await import('input-switch-polyfill')
-}
+;(async () => {
+  if (!('switch' in HTMLInputElement.prototype)) {
+    await import('input-switch-polyfill')
+  }
+})()
