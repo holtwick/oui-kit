@@ -22,7 +22,7 @@ const name = computed<string>(() => model.value ?? props.tabs?.[0]?.value ?? 'de
       class="oui-tabs-nav _nav"
     >
       <template #default="{ options, updateModelValue }">
-        <template v-for="tab in options" :key="tab.name">
+        <template v-for="tab in options" :key="tab.value">
           <button :class="{ _active: model === tab.value }" @click="updateModelValue(tab.value)">
             <slot :name="`tab-${tab.value}`" v-bind="{ tab }">
               <template v-if="tab.icon">
