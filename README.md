@@ -1,7 +1,5 @@
 # 🎨 Oui Kit
 
-<div align="center">
-
 🎯 *UI toolkit with a French touch* 🇫🇷
 
 **Modern • Lightweight • TypeScript-first • Accessible**
@@ -11,8 +9,6 @@
 [![downloads](https://img.shields.io/npm/dm/oui-kit.svg)](https://www.npmjs.com/package/oui-kit)
 
 [🚀 Get Started](#installation) • [📚 Documentation](https://oui.holtwick.de) • [🎮 Live Demo](https://oui.holtwick.de)
-
-</div>
 
 ## ✨ Why Oui Kit?
 
