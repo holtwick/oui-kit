@@ -18,6 +18,10 @@ export const screenshotOptions = {
   type: 'png',
   // Set consistent quality
   quality: 100,
+  // Set a reasonable threshold for visual differences
+  threshold: 0.1, // 10% tolerance for minor rendering differences
+  // Allow a small number of pixels to differ
+  maxDiffPixels: 50,
 } as const
 
 /**

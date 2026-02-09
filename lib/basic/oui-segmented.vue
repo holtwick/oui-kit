@@ -116,7 +116,7 @@ const disabledConform = computed(() => {
     <div ref="containerRef" class="oui-input oui-segmented" :class="computedClass" tabindex="0" role="radiogroup" :disabled="disabledConform" v-bind="$attrs" @keydown="handleKeydown">
       <OuiSlider v-model="model" :options="options" class="oui-segmented-container" slider-class="oui-segmented-slider">
         <template #default="{ options: slidingOptions, updateModelValue }">
-          <template v-for="option in slidingOptions" :key="option.value">
+          <template v-for="option in slidingOptions" :key="String(option.value)">
             <button :class="{ _active: model === option.value }" :disabled="disabledConform" role="radio" :aria-checked="model === option.value" :aria-label="option.title || String(option.value)" tabindex="-1" @click="updateModelValue(option.value)">
               <slot :name="`option-${option.value}`" v-bind="{ option }">
                 <template v-if="option.icon">

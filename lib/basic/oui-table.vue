@@ -70,14 +70,14 @@ function doSelect(pos: number) {
       </tr>
     </thead>
     <tbody>
-      <template v-for="item, rowPos in data" :key="item">
+      <template v-for="item, rowPos in data" :key="rowPos">
         <tr
           :class="{
             _selectable: selectable,
             _active: modelSelected === rowPos,
           }" @click="doSelect(rowPos)" @contextmenu.prevent="emit('context', item, rowPos, $event)"
         >
-          <template v-for="col, pos in cols" :key="col.name">
+          <template v-for="col, pos in cols" :key="col.name ?? pos">
             <td
               :align="col.align ?? 'left'" :valign="col.valign ?? 'top'" :class="{
                 _grow: col.grow === true,

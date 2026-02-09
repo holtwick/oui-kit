@@ -141,9 +141,9 @@ const columns = computed(() => {
     </template>
     <template #col-message="{ item }">
       <span>
-        <template v-for="(o, i) in item.message" :key="o">
+        <template v-for="(o, i) in item.message" :key="i">
           <template v-if="isString(o)">
-            <b v-if="i % 2 !== 0" style="font-weight:600;">{{ o.slice(0, 255) }}</b>
+            <b v-if="+i % 2 !== 0" style="font-weight:600;">{{ o.slice(0, 255) }}</b>
             <span v-else>{{ o.slice(0, 255) }}</span>
           </template>
           <template v-else>

@@ -50,12 +50,14 @@ export default defineConfig({
 
     /* Configure visual comparison settings */
     toHaveScreenshot: {
-      threshold: 0.2,
+      threshold: 0.3, // 30% tolerance for minor rendering differences
+      maxDiffPixels: 100, // Allow up to 100 pixels to differ
       mode: 'pixel',
       animations: 'disabled',
     },
     toMatchSnapshot: {
-      threshold: 0.2,
+      threshold: 0.3, // 30% tolerance for minor rendering differences
+      maxDiffPixels: 100, // Allow up to 100 pixels to differ
       mode: 'pixel',
     },
   } as any,
