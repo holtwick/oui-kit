@@ -93,7 +93,7 @@
     "test:e2e:consistency": "node tests/e2e/check-consistency.js",
     "test:release": "nr lint:fix && nr check && vitest --run && nr test:e2e",
     "test:all": "nr test:release && nr test:e2e",
-    "npm:release": "pnpm login && pnpm publish --access public",
+    "npm:release": "npm login && npm publish --access public",
     "post:release": "nr upload",
     "upload": "nr build:demo && rsync -rvz www/* cy:public_html/oui.holtwick.de"
   },
