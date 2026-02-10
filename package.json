@@ -98,33 +98,33 @@
     "upload": "nr build:demo && rsync -rvz www/* cy:public_html/oui.holtwick.de"
   },
   "dependencies": {
-    "@floating-ui/vue": "^1.1.9",
-    "@vueuse/core": "^14.1.0",
-    "vue": "^3.5.25",
-    "zeed": "^1.1.1"
+    "@floating-ui/vue": "^1.1.10",
+    "@vueuse/core": "^14.2.1",
+    "vue": "^3.5.28",
+    "zeed": "^1.2.2"
   },
   "optionalDependencies": {
     "v-calendar": "^3.1.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^6.2.0",
-    "@antfu/ni": "^28.0.0",
-    "@playwright/test": "^1.57.0",
-    "@shikijs/markdown-it": "^3.18.0",
-    "@vitejs/plugin-vue": "^6.0.2",
-    "@vitest/browser": "^4.0.14",
-    "@vitest/coverage-v8": "4.0.14",
+    "@antfu/eslint-config": "^7.4.2",
+    "@antfu/ni": "^28.2.0",
+    "@playwright/test": "^1.58.2",
+    "@shikijs/markdown-it": "^3.22.0",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitest/browser": "^4.0.18",
+    "@vitest/coverage-v8": "4.0.18",
     "@vue/test-utils": "^2.4.6",
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.0",
     "stylus": "^0.64.0",
     "tsup": "^8.5.1",
     "unplugin-vue-markdown": "^29.2.0",
     "v-calendar": "^3.1.2",
-    "vite": "^7.2.6",
+    "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-qrcode": "^0.3.0",
-    "vite-plugin-vue-devtools": "^8.0.5",
-    "vitest": "^4.0.14",
-    "vue-tsc": "^3.1.5"
+    "vite-plugin-vue-devtools": "^8.0.6",
+    "vitest": "^4.0.18",
+    "vue-tsc": "^3.2.4"
   }
 }

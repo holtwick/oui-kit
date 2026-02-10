@@ -1,5 +1,6 @@
 export * from './basic'
 export * from './float'
+export * from './layout'
 export * from './mobile'
 export * from './modal'
 export * from './notification'
