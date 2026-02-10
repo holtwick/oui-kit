@@ -42,4 +42,3 @@ export function rex(value: number | string): string {
 
   return String(value)
 }
-
