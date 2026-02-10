@@ -43,7 +43,7 @@ function setNextWeek() {
 <template>
   <div>
     <OuiDay
-      v-model:day="state.day"
+      v-model="state.day"
       title="Select Date"
       description="Button mode: Arrow keys navigate days, Alt+Arrow for months, Cmd+Arrow for years"
       :required="true"
@@ -51,7 +51,7 @@ function setNextWeek() {
     />
 
     <OuiDay
-      v-model:day="state.editableDay"
+      v-model="state.editableDay"
       title="Editable Date"
       description="Type a date like '2026-02-10'. Keyboard: Alt+Arrow for months, Cmd+Arrow for years"
       :editable="true"
@@ -60,7 +60,7 @@ function setNextWeek() {
     />
 
     <OuiDay
-      v-model:day="state.emptyDay"
+      v-model="state.emptyDay"
       title="Empty Date with Placeholder"
       description="Optional date field with placeholder"
       :placeholder-day="state.placeholderDay"
@@ -68,7 +68,7 @@ function setNextWeek() {
     />
 
     <OuiDay
-      v-model:day="state.formattedDay"
+      v-model="state.formattedDay"
       title="Custom Formatter"
       description="Using a long weekday/month format"
       :formatter="formatDayLong"
@@ -76,7 +76,7 @@ function setNextWeek() {
     />
 
     <OuiDay
-      v-model:day="state.customFooterDay"
+      v-model="state.customFooterDay"
       title="Custom Footer"
       description="Footer slot with custom actions"
       :show-arrows="state.showArrows"

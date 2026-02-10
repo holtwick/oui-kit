@@ -3,12 +3,20 @@ import { describe, expect, it } from 'vitest'
 import { dayFromString } from 'zeed'
 import OuiDay from './oui-day.vue'
 
+// Mock i18n function
+const mockT = (defaultText: string) => defaultText
+
 describe('ouiDay', () => {
   it('renders with a day value', () => {
     const testDay = dayFromString('2026-02-10')!
     const wrapper = mount(OuiDay, {
       props: {
-        day: testDay,
+        modelValue: testDay,
+      },
+      global: {
+        provide: {
+          t: mockT,
+        },
       },
     })
 
@@ -19,7 +27,12 @@ describe('ouiDay', () => {
     const testDay = dayFromString('2026-02-10')!
     const wrapper = mount(OuiDay, {
       props: {
-        day: testDay,
+        modelValue: testDay,
+      },
+      global: {
+        provide: {
+          t: mockT,
+        },
       },
     })
 
@@ -32,9 +45,14 @@ describe('ouiDay', () => {
     const testDay = dayFromString('2026-02-10')!
     const wrapper = mount(OuiDay, {
       props: {
-        day: testDay,
+        modelValue: testDay,
         title: 'Select a Date',
         description: 'Choose your preferred date',
+      },
+      global: {
+        provide: {
+          t: mockT,
+        },
       },
     })
 
@@ -46,8 +64,13 @@ describe('ouiDay', () => {
     const testDay = dayFromString('2026-02-10')!
     const wrapper = mount(OuiDay, {
       props: {
-        day: testDay,
+        modelValue: testDay,
         editable: true,
+      },
+      global: {
+        provide: {
+          t: mockT,
+        },
       },
     })
 
@@ -59,8 +82,13 @@ describe('ouiDay', () => {
     const placeholderDay = dayFromString('2026-01-01')!
     const wrapper = mount(OuiDay, {
       props: {
-        day: undefined,
+        modelValue: undefined,
         placeholderDay,
+      },
+      global: {
+        provide: {
+          t: mockT,
+        },
       },
     })
 
@@ -71,7 +99,12 @@ describe('ouiDay', () => {
   it('accepts undefined day value', () => {
     const wrapper = mount(OuiDay, {
       props: {
-        day: undefined,
+        modelValue: undefined,
+      },
+      global: {
+        provide: {
+          t: mockT,
+        },
       },
     })
 

@@ -1,7 +1,7 @@
 {
   "name": "oui-kit",
   "type": "module",
-  "version": "0.36.0",
+  "version": "0.36.1",
   "author": {
     "email": "dirk.holtwick@gmail.com",
     "name": "Dirk Holtwick",
@@ -101,7 +101,7 @@
     "@floating-ui/vue": "^1.1.10",
     "@vueuse/core": "^14.2.1",
     "vue": "^3.5.28",
-    "zeed": "^1.2.2"
+    "zeed": "^1.2.4"
   },
   "optionalDependencies": {
     "v-calendar": "^3.1.2"
