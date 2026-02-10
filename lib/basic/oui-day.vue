@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type { DayValue } from 'zeed'
 import { computed, defineAsyncComponent, nextTick, ref, watch } from 'vue'
-import { dayFromDate, dayFromToday, dayMonthStart, dayOffset, dayToDate, dayYearStart } from 'zeed'
+import { dayFromDate, dayFromToday, dayMonthOffset, dayOffset, dayToDate, dayYearOffset } from 'zeed'
 import OuiFloat from '../float/oui-float.vue'
 import OuiButton from './oui-button.vue'
 import OuiFormItem from './oui-form-item.vue'
+import { t } from '@/basic/i18n'
+import OuiSpace from '../layout/oui-space.vue'
+import { useDark } from '@vueuse/core'
 
 import './oui-day.styl'
 
@@ -26,11 +29,11 @@ const props = withDefaults(defineProps<{
 
 const DatePicker = defineAsyncComponent(async () => (await import('v-calendar')).DatePicker)
 
-const day = defineModel<DayValue | undefined>('day', { required: false })
+const day = defineModel<DayValue | undefined>({ required: false })
 
 const showPicker = ref(false)
 const inputText = ref('')
-const inputRef = ref()
+const inputRef = ref<HTMLInputElement>()
 const targetRef = ref()
 const focus = ref(false)
 
@@ -81,7 +84,7 @@ const placeholderText = computed(() => {
   if (props.placeholderDay) {
     return formatDay(props.placeholderDay)
   }
-  return 'Select date'
+  return t('Select date', 'oui.day.selectDate')
 })
 
 // Watch day value and sync inputText
@@ -133,6 +136,7 @@ function handleBlur() {
 
 // Navigation functions
 function moveDay(delta: number) {
+  console.log('moveDay', delta)
   const current = day.value ?? props.placeholderDay
   if (current) {
     day.value = dayOffset(current, delta)
@@ -143,7 +147,7 @@ function moveDay(delta: number) {
 function moveMonth(delta: number) {
   const current = day.value ?? props.placeholderDay
   if (current) {
-    day.value = dayMonthStart(current, delta)
+    day.value = dayMonthOffset(current, delta)
     showPicker.value = true
   }
 }
@@ -151,7 +155,7 @@ function moveMonth(delta: number) {
 function moveYear(delta: number) {
   const current = day.value ?? props.placeholderDay
   if (current) {
-    day.value = dayYearStart(current, delta)
+    day.value = dayYearOffset(current, delta)
     showPicker.value = true
   }
 }
@@ -173,6 +177,8 @@ function clearDay() {
   day.value = undefined
   closePicker()
 }
+
+const isDark = useDark()
 </script>
 
 <template>
@@ -190,64 +196,21 @@ function clearDay() {
     <div ref="targetRef" class="oui-day">
       <div class="_dateselect oui-input-group">
         <div v-if="editable" class="oui-input-container" :class="{ '-focus': focus }">
-          <input
-            ref="inputRef"
-            type="text"
-            class="oui-input"
-            :value="inputText"
-            :placeholder="placeholderText"
-            @input="handleInputChange"
-            @focus="handleFocus"
-            @blur="handleBlur"
-            @keydown.alt.up.prevent="moveMonth(+1)"
-            @keydown.alt.down.prevent="moveMonth(-1)"
-            @keydown.meta.up.prevent="moveYear(+1)"
-            @keydown.meta.down.prevent="moveYear(-1)"
-            @keydown.ctrl.up.prevent="moveYear(+1)"
-            @keydown.ctrl.down.prevent="moveYear(-1)"
-          >
+          <input ref="inputRef" type="text" class="oui-input" :value="inputText" :placeholder="placeholderText" @input="handleInputChange" @focus="handleFocus" @blur="handleBlur" @keydown.up.prevent="moveDay(+1)" @keydown.down.prevent="moveDay(-1)" @keydown.alt.up.prevent="moveMonth(+1)" @keydown.alt.down.prevent="moveMonth(-1)" @keydown.meta.up.prevent="moveYear(+1)" @keydown.meta.down.prevent="moveYear(-1)" @keydown.ctrl.up.prevent="moveYear(+1)" @keydown.ctrl.down.prevent="moveYear(-1)">
         </div>
-        <OuiFloat
-          v-model="showPicker"
-          :reference="editable ? targetRef : undefined"
-          placement="bottom-start"
-          :offset="10"
-          :close="!editable"
-          class="oui-float _dropdown"
-        >
+        <OuiFloat v-model="showPicker" :reference="editable ? targetRef : undefined" placement="bottom-start" :close="!editable" class="oui-float _dropdown oui-day-float">
           <template v-if="!editable" #trigger>
-            <OuiButton
-              mode="outline"
-              dropdown
-              @keydown.up.prevent="moveDay(+1)"
-              @keydown.down.prevent="moveDay(-1)"
-              @keydown.alt.up.prevent="moveMonth(+1)"
-              @keydown.alt.down.prevent="moveMonth(-1)"
-              @keydown.meta.up.prevent="moveYear(+1)"
-              @keydown.meta.down.prevent="moveYear(-1)"
-              @keydown.ctrl.up.prevent="moveYear(+1)"
-              @keydown.ctrl.down.prevent="moveYear(-1)"
-            >
-              {{ selectedDateFormatted || 'Select date' }}
+            <OuiButton mode="outline" dropdown @keydown.up.prevent="moveDay(+1)" @keydown.down.prevent="moveDay(-1)" @keydown.alt.up.prevent="moveMonth(+1)" @keydown.alt.down.prevent="moveMonth(-1)" @keydown.meta.up.prevent="moveYear(+1)" @keydown.meta.down.prevent="moveYear(-1)" @keydown.ctrl.up.prevent="moveYear(+1)" @keydown.ctrl.down.prevent="moveYear(-1)">
+              {{ selectedDateFormatted || t('Select date', 'oui.day.selectDate') }}
             </OuiButton>
           </template>
-          <DatePicker
-            v-model="vdate"
-            mode="date"
-            placeholder="Select date"
-            class="date-picker oui-day-teleport"
-            :columns="1"
-            show-weeknumbers
-            :popover="false"
-            borderless
-            @mousedown.prevent
-            @touchstart.prevent
-          />
+          <DatePicker :is-dark="isDark" v-model="vdate" mode="date" :placeholder="t('Select date', 'oui.day.selectDate')" class="date-picker oui-day-teleport" :columns="1" show-weeknumbers :popover="false" transparent borderless @mousedown.prevent @touchstart.prevent />
           <div class="oui-day-footer">
             <slot name="footer">
               <OuiButton mode="ghost" @click="setToday">
                 Heute
               </OuiButton>
+              <OuiSpace />
               <OuiButton mode="ghost" @click="clearDay">
                 Löschen
               </OuiButton>
