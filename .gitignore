@@ -90,7 +90,8 @@ zerva-bin/bin.cjs
 
 .npmrc*
 
-.vscode
+# .vscode
+# .vscode/launch.json
 
 # _archive
 

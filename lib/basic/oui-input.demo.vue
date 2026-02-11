@@ -9,6 +9,7 @@ const state = reactive({
   title: 'Title',
   type: 'text',
   clearable: false,
+
 })
 
 const options = [

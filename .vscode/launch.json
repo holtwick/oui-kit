@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "type": "chrome",
+      "name": "Chromium",
+      "request": "launch",
+      "url": "http://localhost:5173/",
+      "runtimeExecutable": "/Applications/Chromium.app/Contents/MacOS/Chromium"
+    },
+    {
+      "type": "firefox",
+      "request": "attach",
+      "name": "Attach"
+    },
+    {
+      "type": "firefox",
+      "request": "launch",
+      "name": "Launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}"
+    },
+  ]
+}

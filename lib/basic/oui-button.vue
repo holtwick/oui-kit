@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<{
   href?: string
   target?: string
   disabled?: boolean
+  focusable?: boolean
 }>(), {
   mode: 'neutral',
   size: 'normal',
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<{
   outline: false,
   target: '_blank',
   disabled: false,
+  focusable: true,
 })
 
 const slots = useSlots()
@@ -51,10 +53,10 @@ const klass = computed(() => ([
 </script>
 
 <template>
-  <a v-if="href && !disabled" :href="href" :target="target" :class="klass" role="button" :aria-label="buttonTitle" :aria-disabled="disabled">
+  <a v-if="href && !disabled" :href="href" :target="target" :class="klass" role="button" :aria-label="buttonTitle" :aria-disabled="disabled" :tabindex="focusable ? 0 : -1">
     <slot>{{ title }}</slot>
   </a>
-  <button v-else :disabled="disabled ? true : undefined" :class="klass" :aria-label="buttonTitle" :aria-disabled="disabled">
+  <button v-else :tabindex="focusable ? 0 : -1" :disabled="disabled ? true : undefined" :class="klass" :aria-label="buttonTitle" :aria-disabled="disabled">
     <slot>{{ title }}</slot>
   </button>
 </template>

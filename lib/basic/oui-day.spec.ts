@@ -1,7 +1,8 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { dayFromString } from 'zeed'
 import OuiDay from './oui-day.vue'
+import { dayValidator } from './oui-day.lib'
 
 // Mock i18n function
 const mockT = (defaultText: string) => defaultText
@@ -111,5 +112,40 @@ describe('ouiDay', () => {
     expect(wrapper.exists()).toBe(true)
     const button = wrapper.find('.oui-button')
     expect(button.text()).toContain('Select date')
+  })
+})
+
+describe('dayValidator', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(2026, 1, 10, 12, 0, 0, 0))
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('parses day-month-year input', () => {
+    const result = dayValidator('2.10.26')
+
+    expect(result).toBe(dayFromString('2026-10-02'))
+  })
+
+  it('parses month-day-year input in usa mode', () => {
+    const result = dayValidator('12/25/26', true)
+
+    expect(result).toBe(dayFromString('2026-12-25'))
+  })
+
+  it('rolls back to previous year for far future dates', () => {
+    const result = dayValidator('25.12')
+
+    expect(result).toBe(dayFromString('2025-12-25'))
+  })
+
+  it('returns undefined for empty input', () => {
+    const result = dayValidator('')
+
+    expect(result).toBe(undefined)
   })
 })
