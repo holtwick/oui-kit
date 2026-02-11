@@ -1,7 +1,7 @@
 <script lang="ts" setup generic="K">
 import type { OuiSegmentedOptions } from './_types'
 import { computed, ref } from 'vue'
-import { t } from '@/basic/i18n'
+import { tt } from '@/basic/i18n'
 import OuiFormItem from './oui-form-item.vue'
 import OuiSlider from './oui-slider.vue'
 
@@ -44,7 +44,7 @@ const activeOption = computed(() =>
 )
 
 const displayValue = computed(() =>
-  activeOption.value?.title || activeOption.value?.value || props.placeholder || t('Select option', 'oui.segmented.placeholder'),
+  activeOption.value?.title || activeOption.value?.value || props.placeholder || tt('Select option', 'oui.segmented.placeholder'),
 )
 
 function handleKeydown(event: KeyboardEvent) {

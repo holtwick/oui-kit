@@ -2,7 +2,7 @@
 import type { LoggerInterface } from 'zeed'
 import { onMounted, ref } from 'vue'
 import { Logger } from 'zeed'
-import { t } from '@/basic/i18n'
+import { tt } from '@/basic/i18n'
 
 import './css-vars.demo.styl'
 
@@ -167,7 +167,7 @@ function updateGrouping() {
 
 <template>
   <div class="_css_vars oui-css-vars">
-    <h1>{{ t('CSS Variables', 'oui.cssVars.title') }}</h1>
+    <h1>{{ tt('CSS Variables', 'oui.cssVars.title') }}</h1>
 
     <div class="_controls">
       <label class="_checkbox_label">
@@ -176,7 +176,7 @@ function updateGrouping() {
           type="checkbox"
           @change="updateGrouping"
         >
-        {{ t('Group by reference', 'oui.cssVars.groupByReference') }}
+        {{ tt('Group by reference', 'oui.cssVars.groupByReference') }}
       </label>
 
       <label class="_checkbox_label">
@@ -185,7 +185,7 @@ function updateGrouping() {
           type="checkbox"
           @change="updateGrouping"
         >
-        {{ t('Show private variables only', 'oui.cssVars.showPrivateOnly') }}
+        {{ tt('Show private variables only', 'oui.cssVars.showPrivateOnly') }}
       </label>
 
       <label class="_checkbox_label">
@@ -194,7 +194,7 @@ function updateGrouping() {
           type="checkbox"
           @change="updateGrouping"
         >
-        {{ t('Show root variables only', 'oui.cssVars.showRootOnly') }}
+        {{ tt('Show root variables only', 'oui.cssVars.showRootOnly') }}
       </label>
     </div>
 
@@ -241,7 +241,7 @@ function updateGrouping() {
     </div>
 
     <div v-if="cssVariables.length === 0" class="_no_variables">
-      {{ t('No CSS variables found', 'oui.cssVars.noVariables') }}
+      {{ tt('No CSS variables found', 'oui.cssVars.noVariables') }}
     </div>
   </div>
 </template>

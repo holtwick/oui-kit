@@ -1,7 +1,7 @@
 import type { DayValue } from 'zeed'
 import { dayDiff, dayFromDate, dayFromString } from 'zeed'
 
-const shortDateRegex = /^\s*(\d{1,2})(?:\s*[,\\'`./-]\s*(\d{1,2})(?:\s*[,\\'`./-]\s*(\d{1,4}))?)?\s*$/
+const shortDateRegex = /^(\d{1,2})(?:[\s,\\'`./-]+(\d{1,2})(?:[\s,\\'`./-]+(\d{1,4}))?)?/
 
 function dayDiffFromNow(candidate: Date, now: Date): number {
   return dayDiff(dayFromDate(candidate), dayFromDate(now))
@@ -32,6 +32,7 @@ export function dayValidator(text: string, usaMode = false): DayValue | undefine
       }
     }
 
+    shortDateRegex.lastIndex = 0
     const match = shortDateRegex.exec(trimmed)
     if (!match) {
       return undefined

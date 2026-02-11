@@ -3,7 +3,7 @@ import type { LoggerInterface } from 'zeed'
 import { useDropZone, useFileDialog } from '@vueuse/core'
 import { ref } from 'vue'
 import { createPromise, Logger } from 'zeed'
-import { t } from './i18n'
+import { tt } from './i18n'
 import OuiClose from './oui-close.vue'
 import OuiFormItem from './oui-form-item.vue'
 
@@ -147,13 +147,13 @@ function doClear() {
       <div class="_content">
         <template v-if="!model || model?.length <= 0">
           <div class="_message">
-            <slot>{{ titleChoose ?? t('Choose file...', 'oui.file.choose') }}</slot>
+            <slot>{{ titleChoose ?? tt('Choose file...', 'oui.file.choose') }}</slot>
           </div>
         </template>
         <template v-else>
           <div class="_message">
             <slot name="preview" :filename="modelFilename">
-              {{ modelFilename ?? t('File available', 'oui.file.placeholder') }}
+              {{ modelFilename ?? tt('File available', 'oui.file.placeholder') }}
             </slot>
           </div>
           <OuiClose v-if="!disabled" @click.stop.prevent="doClear" />

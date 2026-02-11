@@ -47,7 +47,7 @@ function setNextWeek() {
   <div>
     <OuiDay
       v-model="state.day"
-      title="Select Date"
+      title="Required Date"
       description="Button mode: Arrow keys navigate days, Alt+Arrow for months, Cmd+Arrow for years"
       :required="true"
       :editable="state.editable"
@@ -61,7 +61,6 @@ function setNextWeek() {
       title="Editable Date"
       description="Type a date like '2026-02-10'. Keyboard: Alt+Arrow for months, Cmd+Arrow for years"
       :editable="state.editable"
-      :validator="parseDay"
       :show-arrows="state.showArrows"
       :disabled="state.disabled"
       :clearable="state.clearable"
