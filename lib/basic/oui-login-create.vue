@@ -2,7 +2,7 @@
 import type { LoggerInterface } from 'zeed'
 import { computed, ref } from 'vue'
 import { Logger } from 'zeed'
-import { t } from '@/basic/i18n'
+import { tt } from '@/basic/i18n'
 import OuiButton from './oui-button.vue'
 import OuiInput from './oui-input.vue'
 import OuiNotice from './oui-notice.vue'
@@ -51,22 +51,22 @@ function handleCreate() {
 </script>
 
 <template>
-  <OuiNotice :title="title || t('Create Account', 'oui.loginCreate.title')">
+  <OuiNotice :title="title || tt('Create Account', 'oui.loginCreate.title')">
     <template #default>
-      <p>{{ t('Please create your account credentials.', 'oui.loginCreate.description') }}</p>
+      <p>{{ tt('Please create your account credentials.', 'oui.loginCreate.description') }}</p>
       <div class="oui-login-create">
         <div class="oui-login-create-username">
           <OuiInput
             v-model="username"
             class="_focus"
-            :placeholder="t('Username', 'oui.loginCreate.usernamePlaceholder')"
+            :placeholder="tt('Username', 'oui.loginCreate.usernamePlaceholder')"
             name="username"
           />
         </div>
         <div class="oui-login-create-password">
           <OuiPassword
             v-model="password"
-            :placeholder="t('Password', 'oui.loginCreate.passwordPlaceholder')"
+            :placeholder="tt('Password', 'oui.loginCreate.passwordPlaceholder')"
             :show-meter="false"
             name="password"
           />
@@ -74,12 +74,12 @@ function handleCreate() {
         <div v-if="requireConfirmation" class="oui-login-create-confirm">
           <OuiPassword
             v-model="confirmPassword"
-            :placeholder="t('Confirm Password', 'oui.loginCreate.confirmPasswordPlaceholder')"
+            :placeholder="tt('Confirm Password', 'oui.loginCreate.confirmPasswordPlaceholder')"
             name="confirmPassword"
             :show-meter="false"
           />
           <div v-if="confirmPassword && !isPasswordMatch" class="oui-login-create-error">
-            {{ t('Passwords do not match', 'oui.loginCreate.passwordMismatch') }}
+            {{ tt('Passwords do not match', 'oui.loginCreate.passwordMismatch') }}
           </div>
         </div>
         <div>
@@ -91,7 +91,7 @@ function handleCreate() {
             :disabled="!isFormValid"
             @click="handleCreate"
           >
-            {{ t('Create Account', 'oui.loginCreate.createButton') }}
+            {{ tt('Create Account', 'oui.loginCreate.createButton') }}
           </OuiButton>
         </div>
       </div>

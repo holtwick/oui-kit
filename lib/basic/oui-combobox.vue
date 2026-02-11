@@ -4,7 +4,7 @@ import type { OuiSelectItem } from './_types'
 import { computed, ref, watch } from 'vue'
 import { isNumber, isString, Logger, promisify, uuid } from 'zeed'
 import OuiFloat from '../float/oui-float.vue'
-import { t } from './i18n'
+import { tt } from './i18n'
 import OuiClose from './oui-close.vue'
 import OuiFormItem from './oui-form-item.vue'
 import OuiItems from './oui-items.vue'
@@ -149,7 +149,7 @@ const filteredItems = computed<OuiSelectFilterItem[]>(() => {
               )
             }
           },
-          title: t(props.addItemTitle ?? 'ui.combobox.addTitle', [value]), //  ??
+          title: tt(props.addItemTitle ?? 'Add entry', props.addItemTitle ?? 'ui.combobox.addTitle', [value]), //  ??
           class: props.addItemClass ?? 'oui-combobox-item-add',
           skipSelection: items.length > 0,
           // id: '_create',
@@ -343,7 +343,7 @@ function doFocus() {
           <slot name="header" />
           <slot v-if="filteredItems.length <= 0" name="empty">
             <div class="oui-items-item">
-              {{ t('ui.combobox.empty') }}
+              {{ tt('Empty', 'ui.combobox.empty') }}
             </div>
           </slot>
           <OuiItems

@@ -1,7 +1,8 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { dayFromString } from 'zeed'
 import OuiDay from './oui-day.vue'
+import { dayValidator } from './oui-day.lib'
 
 // Mock i18n function
 const mockT = (defaultText: string) => defaultText
@@ -13,11 +14,6 @@ describe('ouiDay', () => {
       props: {
         modelValue: testDay,
       },
-      global: {
-        provide: {
-          t: mockT,
-        },
-      },
     })
 
     expect(wrapper.exists()).toBe(true)
@@ -28,11 +24,6 @@ describe('ouiDay', () => {
     const wrapper = mount(OuiDay, {
       props: {
         modelValue: testDay,
-      },
-      global: {
-        provide: {
-          t: mockT,
-        },
       },
     })
 
@@ -49,11 +40,6 @@ describe('ouiDay', () => {
         title: 'Select a Date',
         description: 'Choose your preferred date',
       },
-      global: {
-        provide: {
-          t: mockT,
-        },
-      },
     })
 
     expect(wrapper.text()).toContain('Select a Date')
@@ -66,12 +52,7 @@ describe('ouiDay', () => {
       props: {
         modelValue: testDay,
         editable: true,
-      },
-      global: {
-        provide: {
-          t: mockT,
-        },
-      },
+      }
     })
 
     const input = wrapper.find('input[type="text"]')
@@ -85,11 +66,7 @@ describe('ouiDay', () => {
         modelValue: undefined,
         placeholderDay,
       },
-      global: {
-        provide: {
-          t: mockT,
-        },
-      },
+
     })
 
     const button = wrapper.find('.oui-button')
@@ -101,15 +78,51 @@ describe('ouiDay', () => {
       props: {
         modelValue: undefined,
       },
-      global: {
-        provide: {
-          t: mockT,
-        },
-      },
     })
 
     expect(wrapper.exists()).toBe(true)
     const button = wrapper.find('.oui-button')
     expect(button.text()).toContain('Select date')
+  })
+})
+
+describe('dayValidator', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date(2026, 1, 10, 12, 0, 0, 0))
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('parses day-month-year input', () => {
+    const result = dayValidator('2.10.26')
+
+    expect(result).toBe(dayFromString('2026-10-02'))
+  })
+
+  it('parses month-day-year input in usa mode', () => {
+    const result = dayValidator('12/25/26', true)
+
+    expect(result).toBe(dayFromString('2026-12-25'))
+  })
+
+  it('rolls back to previous year for far future dates', () => {
+    const result = dayValidator('25.12')
+
+    expect(result).toBe(dayFromString('2025-12-25'))
+  })
+
+   it('rolls back to previous year for far future dates', () => {
+    const result = dayValidator('8.8')
+
+    expect(result).toBe(dayFromString('2025-08-08'))
+  })
+
+  it('returns undefined for empty input', () => {
+    const result = dayValidator('')
+
+    expect(result).toBe(undefined)
   })
 })

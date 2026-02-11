@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import { dayFromString, dayFromToday, dayOffset, dayToDate } from 'zeed'
-import { OuiButton, OuiDay, OuiDemo, OuiInputNumber } from '@/lib'
+import { OuiButton, OuiCheckbox, OuiDay, OuiDemo, OuiInputNumber } from '@/lib'
 
 const state = reactive({
   day: dayFromToday(),
@@ -11,6 +11,9 @@ const state = reactive({
   customFooterDay: undefined as number | undefined,
   placeholderDay: dayFromString('2026-01-01'),
   showArrows: false,
+  editable: true,
+  disabled: false,
+  clearable: false,
 })
 
 // Validator function for editable day
@@ -44,19 +47,23 @@ function setNextWeek() {
   <div>
     <OuiDay
       v-model="state.day"
-      title="Select Date"
+      title="Required Date"
       description="Button mode: Arrow keys navigate days, Alt+Arrow for months, Cmd+Arrow for years"
       :required="true"
+      :editable="state.editable"
       :show-arrows="state.showArrows"
+      :disabled="state.disabled"
+      :clearable="state.clearable"
     />
 
     <OuiDay
       v-model="state.editableDay"
       title="Editable Date"
       description="Type a date like '2026-02-10'. Keyboard: Alt+Arrow for months, Cmd+Arrow for years"
-      :editable="true"
-      :validator="parseDay"
+      :editable="state.editable"
       :show-arrows="state.showArrows"
+      :disabled="state.disabled"
+      :clearable="state.clearable"
     />
 
     <OuiDay
@@ -64,7 +71,10 @@ function setNextWeek() {
       title="Empty Date with Placeholder"
       description="Optional date field with placeholder"
       :placeholder-day="state.placeholderDay"
+      :editable="state.editable"
       :show-arrows="state.showArrows"
+      :disabled="state.disabled"
+      :clearable="state.clearable"
     />
 
     <OuiDay
@@ -72,7 +82,10 @@ function setNextWeek() {
       title="Custom Formatter"
       description="Using a long weekday/month format"
       :formatter="formatDayLong"
+      :editable="state.editable"
       :show-arrows="state.showArrows"
+      :disabled="state.disabled"
+      :clearable="state.clearable"
     />
 
     <OuiDay
@@ -80,6 +93,9 @@ function setNextWeek() {
       title="Custom Footer"
       description="Footer slot with custom actions"
       :show-arrows="state.showArrows"
+      :editable="state.editable"
+      :disabled="state.disabled"
+      :clearable="state.clearable"
     >
       <template #footer>
         <OuiButton mode="ghost" @click="setYesterday">
@@ -98,9 +114,9 @@ function setNextWeek() {
     <OuiInputNumber v-model="state.formattedDay" title="formattedDay" />
     <OuiInputNumber v-model="state.customFooterDay" title="customFooterDay" />
     <OuiInputNumber v-model="state.placeholderDay" title="placeholderDay" />
-    <label>
-      <input v-model="state.showArrows" type="checkbox">
-      Show arrows
-    </label>
+    <OuiCheckbox v-model="state.editable" switch title="Editable" />
+    <OuiCheckbox v-model="state.showArrows" switch title="Show arrows" />
+    <OuiCheckbox v-model="state.clearable" switch title="Clearable" />
+    <OuiCheckbox v-model="state.disabled" switch title="Disabled" />
   </OuiDemo>
 </template>

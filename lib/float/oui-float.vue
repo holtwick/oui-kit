@@ -6,6 +6,7 @@ import { arrow as arrowMiddleware, autoUpdate, flip, offset, shift, size, useFlo
 import { onKeyStroke, useElementHover, useEventListener, useFocusWithin } from '@vueuse/core'
 import { computed, onBeforeUnmount, ref, useAttrs, watch } from 'vue'
 
+import { isString } from 'zeed'
 import './oui-float.styl'
 
 defineOptions({
@@ -54,7 +55,7 @@ const { floatingStyles, middlewareData, placement: placementActual } = useFloati
   placement,
   whileElementsMounted: autoUpdate,
   middleware: [
-    offset(props.offset ?? 0),
+    offset(isString(props.offset) ? +props.offset : props.offset ?? 0),
     size(),
     flip(),
     shift({
