@@ -81,6 +81,7 @@ function setNextWeek() {
       v-model="state.formattedDay"
       title="Custom Formatter"
       description="Using a long weekday/month format"
+      :placeholder-day="state.placeholderDay"
       :formatter="formatDayLong"
       :editable="state.editable"
       :show-arrows="state.showArrows"

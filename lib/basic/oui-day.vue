@@ -9,8 +9,8 @@ import OuiSpace from '../layout/oui-space.vue'
 import OuiButton from './oui-button.vue'
 import OuiClose from './oui-close.vue'
 import { dayValidator } from './oui-day.lib'
-
 import OuiFormItem from './oui-form-item.vue'
+
 import './oui-day.styl'
 
 defineOptions({
@@ -62,7 +62,7 @@ function closePicker() {
 // Computed properties for v-calendar compatibility
 const vdate = computed<Date | undefined>({
   get: () => {
-    const effectiveDay = day.value ?? props.placeholderDay
+    const effectiveDay = day.value
     return effectiveDay ? dayToDate(effectiveDay) : undefined
   },
   set: (val) => {
@@ -150,35 +150,21 @@ function handleBlur(event?: Event) {
 
 // Navigation functions
 function moveDay(delta: number) {
-  const current = day.value ?? props.placeholderDay
-  if (current) {
-    day.value = dayOffset(current, delta)
-    showPicker.value = true
-  }
+  const current = day.value ?? props.placeholderDay ?? dayFromToday()
+  day.value = dayOffset(current, delta)
+  showPicker.value = true
 }
 
 function moveMonth(delta: number) {
-  const current = day.value ?? props.placeholderDay
-  if (current) {
-    day.value = dayMonthOffset(current, delta)
-    showPicker.value = true
-  }
+  const current = day.value ?? props.placeholderDay ?? dayFromToday()
+  day.value = dayMonthOffset(current, delta)
+  showPicker.value = true
 }
 
 function moveYear(delta: number) {
-  const current = day.value ?? props.placeholderDay
-  if (current) {
-    day.value = dayYearOffset(current, delta)
-    showPicker.value = true
-  }
-}
-
-function navigateBackward() {
-  moveDay(-1)
-}
-
-function navigateForward() {
-  moveDay(+1)
+  const current = day.value ?? props.placeholderDay ?? dayFromToday()
+  day.value = dayYearOffset(current, delta)
+  showPicker.value = true
 }
 
 function setToday() {
@@ -245,27 +231,44 @@ const isDark = useDark()
           >
             {{ selectedDateFormatted || ttSelectDate() }}
           </OuiButton>
-          <OuiButton
-            v-if="clearable"
-            mode="outline" :title="tt('Clear date', 'oui.day.clearDate')" :disabled="disabled" @click.stop.prevent="clearDay"
-          >
-            <OuiClose />
-          </OuiButton>
+
           <slot name="selectors" />
           <OuiButton
             v-if="showArrows"
-            mode="outline" :title="tt('Previous day', 'oui.day.previousDay')" :disabled="disabled" @click="navigateBackward"
+            mode="outline"
+            :title="tt('Previous day', 'oui.day.previousDay')"
+            :disabled="disabled"
+            @click="moveDay(-1)"
           >
             ←
           </OuiButton>
           <OuiButton
             v-if="showArrows"
-            mode="outline" :title="tt('Next day', 'oui.day.nextDay')" :disabled="disabled" @click="navigateForward"
+            mode="outline"
+            :title="tt('Next day', 'oui.day.nextDay')"
+            :disabled="disabled"
+            @click="moveDay(+1)"
           >
             →
           </OuiButton>
+          <OuiButton
+            v-if="clearable"
+            mode="outline"
+            :title="tt('Clear date', 'oui.day.clearDate')"
+            :disabled="disabled"
+            @click.stop.prevent="clearDay"
+          >
+            <OuiClose />
+          </OuiButton>
         </div>
-        <OuiFloat v-model="showPicker" :reference="targetRef" placement="bottom-start" :close="!editable" class="oui-float _dropdown oui-day-float" :offset="4">
+        <OuiFloat
+          v-model="showPicker"
+          :reference="targetRef"
+          placement="bottom-start"
+          :close="!editable"
+          class="oui-float _dropdown oui-day-float"
+          :offset="4"
+        >
           <DatePicker
             v-model="vdate"
             :is-dark="isDark"
