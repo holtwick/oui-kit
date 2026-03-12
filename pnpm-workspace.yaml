@@ -1,3 +1,7 @@
+shellEmulator: true
+
+trustPolicy: no-downgrade
+
 overrides:
   ajv@>=7.0.0-alpha.0 <8.18.0: '>=8.18.0'
   markdown-it@>=13.0.0 <14.1.1: '>=14.1.1'
