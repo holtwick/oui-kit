@@ -4,6 +4,8 @@ import { OuiCheckbox, OuiDemo, OuiInput, OuiSelect } from '../lib'
 
 const state = reactive({
   value: 'Hello World',
+  formattedValue: 'hello world',
+  validatedValue: 'abc',
   lazy: true,
   required: false,
   title: 'Title',
@@ -11,6 +13,14 @@ const state = reactive({
   clearable: false,
 
 })
+
+function formatUppercase(value: string): string {
+  return value.toUpperCase()
+}
+
+function validateLettersOnly(value: string): boolean {
+  return /^[A-Z]*$/i.test(value)
+}
 
 const options = [
   // 'button',
@@ -63,6 +73,22 @@ const options = [
 
   <div>
     <OuiInput
+      v-model="state.formattedValue"
+      title="Formatter (UPPERCASE)"
+      :formatter="formatUppercase"
+    />
+  </div>
+
+  <div>
+    <OuiInput
+      v-model="state.validatedValue"
+      title="Validator (letters only)"
+      :validator="validateLettersOnly"
+    />
+  </div>
+
+  <div>
+    <OuiInput
       v-model="state.value"
       :lazy="state.lazy"
       :required="state.required"
@@ -80,6 +106,8 @@ const options = [
 
   <OuiDemo :state="state">
     <OuiInput v-model="state.value" title="value" />
+    <OuiInput v-model="state.formattedValue" title="formattedValue" />
+    <OuiInput v-model="state.validatedValue" title="validatedValue" />
     <OuiInput v-model="state.title" title="title" />
     <OuiCheckbox v-model="state.lazy" switch title="lazy" />
     <OuiCheckbox v-model="state.required" switch title="required" />
