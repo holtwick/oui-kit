@@ -2,6 +2,7 @@
 // Derived from https://github.com/waningflow/vue3-virtual-list
 // Which is under MIT License https://github.com/waningflow/vue3-virtual-list/blob/master/package.json#L11
 
+import { useResizeObserver } from '@vueuse/core'
 import { onMounted, ref, toRefs, watch } from 'vue'
 import { debounce } from 'zeed'
 import { px } from './lib'
@@ -41,6 +42,7 @@ let containerSize = 0
 let isScrollBusy = false
 let lastScrollX = 0
 let didUserScroll = false
+let lastRootHeight = 0
 
 function handleScroll() {
   // log('handleScroll', isScrollBusy)
@@ -126,12 +128,24 @@ onMounted(() => {
   if (!root.value)
     return
   containerSize = root.value.clientHeight
+  lastRootHeight = containerSize
   const contentLines = Math.ceil(containerSize / rowHeight.value)
   const totalLines = contentLines + rowBuffer.value
   const range = [0, totalLines]
   indexFirst.value = range[0]
   indexLast.value = range[0] + range[1]
   scrollToEnd()
+})
+
+useResizeObserver(root, (entries) => {
+  const entry = entries[0]
+  if (!entry)
+    return
+  const height = entry.contentRect.height
+  if (height === lastRootHeight)
+    return
+  lastRootHeight = height
+  handleScroll()
 })
 </script>
 
