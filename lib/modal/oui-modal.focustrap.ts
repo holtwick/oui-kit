@@ -17,9 +17,8 @@ let focusableSelectors: undefined | string
 function findFocusable(element: HTMLElement): HTMLElement[] {
   if (!element)
     return []
-  if (focusableSelectors == null)
-    focusableSelectors = _focusableSelectors.join(',')
-  return Array.from(element.querySelectorAll(focusableSelectors!)) || []
+  focusableSelectors ??= _focusableSelectors.join(',')
+  return [...element.querySelectorAll(focusableSelectors!)] as any
 }
 
 let onKeyDown: any

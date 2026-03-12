@@ -81,4 +81,37 @@ describe('ouiInput', () => {
     // Clear button should still show when disabled (following the pattern from OuiFile)
     expect(clearButton.exists()).toBe(true)
   })
+
+  it('applies formatter to input and model value', async () => {
+    const wrapper = mount(OuiInput, {
+      props: {
+        modelValue: 'hello',
+        formatter: (value: string) => value.toUpperCase(),
+      },
+    })
+
+    const input = wrapper.find('input')
+    expect(input.element.value).toBe('HELLO')
+
+    await input.setValue('test')
+
+    expect(input.element.value).toBe('TEST')
+    const modelUpdates = wrapper.emitted('update:modelValue')
+    expect(modelUpdates?.at(-1)?.[0]).toBe('TEST')
+  })
+
+  it('marks invalid value and does not update model', async () => {
+    const wrapper = mount(OuiInput, {
+      props: {
+        modelValue: 'abc',
+        validator: (value: string) => /^[A-Za-z]*$/.test(value),
+      },
+    })
+
+    const input = wrapper.find('input')
+    await input.setValue('abc1')
+
+    expect(input.attributes('aria-invalid')).toBe('true')
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+  })
 })

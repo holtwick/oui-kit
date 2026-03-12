@@ -22,6 +22,8 @@ const props = withDefaults(defineProps<{
   lazyDelay?: number
   disabled?: boolean
   clearable?: boolean
+  formatter?: (value: string) => string
+  validator?: (value: string) => boolean
 }>(), {
   type: 'text',
   lazy: false,
@@ -36,8 +38,21 @@ const emit = defineEmits<{
 const model = defineModel<string | undefined>({ required: true })
 
 const tempValue = ref('')
+const isValid = ref(true)
 
 let timeout: any
+
+function formatValue(value: string): string {
+  if (!props.formatter)
+    return value
+  return props.formatter(value)
+}
+
+function validateValue(value: string): boolean {
+  if (!props.validator)
+    return true
+  return props.validator(value)
+}
 
 function stopTimeout() {
   clearTimeout(timeout)
@@ -46,21 +61,42 @@ function stopTimeout() {
 onBeforeUnmount(stopTimeout)
 
 watch(tempValue, (v) => {
+  const formatted = formatValue(v)
+  if (formatted !== v) {
+    tempValue.value = formatted
+    return
+  }
+
+  isValid.value = validateValue(formatted)
+
   if (!props.lazy) {
-    model.value = v
+    if (isValid.value) {
+      model.value = formatted
+    }
   }
   else if (props.lazyDelay > 0) {
     stopTimeout()
-    timeout = setTimeout(() => model.value = v, props.lazyDelay)
+    timeout = setTimeout(() => {
+      if (validateValue(tempValue.value)) {
+        model.value = tempValue.value
+      }
+    }, props.lazyDelay)
   }
 })
 
-watch(() => model.value, v => tempValue.value = v ?? '', { immediate: true })
+watch(() => model.value, (v) => {
+  const formatted = formatValue(v ?? '')
+  tempValue.value = formatted
+  isValid.value = validateValue(formatted)
+}, { immediate: true })
 
 function lazyUpdate() {
   if (props.lazy) {
     stopTimeout()
-    model.value = tempValue.value
+    isValid.value = validateValue(tempValue.value)
+    if (isValid.value) {
+      model.value = tempValue.value
+    }
   }
 }
 
@@ -79,6 +115,7 @@ function doClear() {
     return
 
   tempValue.value = ''
+  isValid.value = validateValue('')
   model.value = ''
 }
 </script>
@@ -98,7 +135,7 @@ function doClear() {
     <template v-if="$slots.start || $slots.end || (clearable && (model || tempValue))">
       <div class="oui-input oui-input-container" :disabled="disabled ? true : undefined">
         <slot name="start" />
-        <input :id="id" v-model="tempValue" :type="type" v-bind="$attrs" :disabled="disabled ? true : undefined" @keypress="doUpdate" @blur="lazyUpdate">
+        <input :id="id" v-model="tempValue" :type="type" v-bind="$attrs" :disabled="disabled ? true : undefined" :aria-invalid="!isValid ? true : undefined" @keypress="doUpdate" @blur="lazyUpdate">
         <slot name="end" />
         <div
           v-if="clearable && (model || tempValue)"
@@ -110,7 +147,7 @@ function doClear() {
       </div>
     </template>
     <template v-else>
-      <input :id="id" v-model="tempValue" :type="type" class="oui-input oui-input-string" :disabled="disabled ? true : undefined" v-bind="$attrs" @keypress="doUpdate" @blur="lazyUpdate">
+      <input :id="id" v-model="tempValue" :type="type" class="oui-input oui-input-string" :disabled="disabled ? true : undefined" v-bind="$attrs" :aria-invalid="!isValid ? true : undefined" @keypress="doUpdate" @blur="lazyUpdate">
     </template>
   </OuiFormItem>
 </template>

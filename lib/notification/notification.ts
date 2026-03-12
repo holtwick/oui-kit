@@ -29,8 +29,7 @@ export function _emitNotification(n: AppNotificationSetup): AppNotificationInfo 
     n.icon = 'info'
   if (!n.mode)
     n.mode = 'info'
-  if (n.timeout == null)
-    n.timeout = 5 * 1000
+  n.timeout ??= 5 * 1000
 
   if (n.timeout > 0) {
     log(`Notification ${n.id} will timeout after ${n.timeout}ms`)
@@ -123,6 +122,6 @@ export function useNotification(
   },
 ) {
   return (nn: AppNotificationInfo) => {
-    emitNotification(Object.assign({}, n, nn))
+    emitNotification({ ...n, ...nn })
   }
 }

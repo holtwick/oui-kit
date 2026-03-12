@@ -66,7 +66,7 @@ export function useLazyData<T>(opt: Config<T>) {
       nextChunksToLoad = []
 
       const fromIndex = loading[0] * chunkSize
-      const itemCount = (loading[loading.length - 1] - loading[0] + 1) * chunkSize
+      const itemCount = (loading.at(-1)! - loading[0] + 1) * chunkSize
 
       const currentIteration = iteration
 
