@@ -28,7 +28,12 @@ html.oui-mobile {
     position: relative;
   }
 
-  &, body, ._keyboard_aware_height, .oui-modal { /* hack: for modal */
+  /* Always correct height also for virtual keyboard */
+  .oui-mobile-fullheight {
+     height: var(--visible-height, 100%) !important;
+  }
+
+  &, body, .oui-mobile-fullheight { /* hack: for modal */
     /* Animation only works well in PWA mode */
     /* https://forums.developer.apple.com/forums/thread/48088 */
     transition: height 400ms cubic-bezier(0.38, 0.7, 0.125, 1);

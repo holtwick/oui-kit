@@ -146,7 +146,7 @@ async function checkClose(e: OuiDraggableEvent) {
   <Teleport to="body">
     <Transition appear :name="transition ?? `${name}-transition`" @after-enter="didOpen" @after-leave="didClose">
       <div
-        v-if="_active" ref="root" class="oui-modal _keyboard_aware_height" :class="{
+        v-if="_active" ref="root" class="oui-modal oui-mobile-fullheight" :class="{
           [name]: true,
           [$attrs.class as string]: !!$attrs.class,
           _active,
