@@ -108,7 +108,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^7.7.2",
-    "@antfu/ni": "^28.3.0",
+    "@antfu/ni": "^29.0.0",
     "@playwright/test": "^1.58.2",
     "@shikijs/markdown-it": "^4.0.2",
     "@vitejs/plugin-vue": "^6.0.5",
@@ -122,7 +122,7 @@
     "vite": "^8.0.0",
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-qrcode": "^0.3.0",
-    "vite-plugin-vue-devtools": "^8.0.7",
+    "vite-plugin-vue-devtools": "^8.1.0",
     "vitest": "^4.1.0",
     "vue-tsc": "^3.2.5"
   }
