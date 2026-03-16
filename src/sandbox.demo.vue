@@ -1,28 +1,49 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
-import { OuiCheckbox, OuiDemo } from '@/lib'
+import { OuiMobileActivator } from '@/lib'
 
 import './sandbox.demo.styl'
-
-const state = reactive({
-  show: false,
-})
 </script>
 
 <template>
-  <div class="sandbox">
-    <Teleport to="body">
-      <Transition
-        appear
-        name="sandbox-animation"
-      >
-        <div v-if="state.show" class="sandbox-object">
-          <b>OBJECT</b>
-        </div>
-      </Transition>
-    </Teleport>
+  <OuiMobileActivator />
+  <div class="container">
+    <div class="top">
+      TOP
+    </div>
+    <div class="middle">
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <p>fghkjasgfdjhfgsjdagf jdsgfjhdsg fjkg sadfjg dfjkhgd kjfhg dsjkahgf jdhgf jhdag sfjhkdgs fjkhdg fjkhg sdjkfhg dsjkhgf d</p>
+      <input type="text" value="Hallo">
+    </div>
+    <div class="bottom">
+      Bottom
+    </div>
   </div>
-  <OuiDemo :state="state">
-    <OuiCheckbox v-model="state.show" switch title="show" />
-  </OuiDemo>
 </template>

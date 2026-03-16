@@ -1,31 +1,37 @@
 @require "../stylus/index.styl";
 
-.sandbox {
-  use: stack-y;
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
 
-  &-object {
-    position: fixed;
-    padding: 16;
-    background: -green-200;
-    transition: all 2500ms ease-in-out;
-    left: 80%;
-    top: 100;
-    opacity: 1;
-    color: black;
+.container {
+  display: flex;
+  flex-direction: column;
+  height: var(--visible-height, 100dvh);
+  background: yellow;
+  overflow: hidden;
+}
 
-    b {
-      transition: all 2500ms ease-in-out;
-    }
-  }
+.top,
+.bottom {
+  background: green;
+  flex: 0 0 auto; /* shrink to content */
+  padding-left: var(--safe-left, -safe-left);
+  padding-right: var(--safe-right, -safe-right);
+}
 
-  &-animation {
-    &-enter-from, &-leave-to {
-      left: 0;
-      opacity: 0;
+.top {
+  padding-top: var(--safe-top, -safe-top);
+}
 
-      b {
-        color: white;
-      }
-    }
-  }
+.middle {
+  flex: 1 1 auto; /* takes up remaining space */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bottom {
+  padding-bottom: var(--safe-bottom, -safe-bottom);
 }

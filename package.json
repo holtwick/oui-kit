@@ -69,6 +69,7 @@
     "check": "vue-tsc --noEmit",
     "dev": "vite --host --open",
     "dev:e2e": "APP_E2E=1 vite",
+    "dev:mobile": "APP_MOBILE=1 vite",
     "generate-pwa-assets": "npx pwa-assets-generator",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
