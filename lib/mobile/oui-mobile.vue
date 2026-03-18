@@ -36,7 +36,6 @@ function isActive() {
   return document.documentElement.classList.contains('oui-mobile')
 }
 
-
 if (useSingleton('oui-mobile') && isMobile()) {
   log('init')
 

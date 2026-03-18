@@ -9,8 +9,10 @@ A prominent overlay containing a message, suitable e. g. for warning messages. I
 
 It is possible to set CSS variable `--notice-fg` for the icon color.
 
+`--notice-bg` to set the background color.
+
 ```vue
-<OuiNotice title="Warning" style="--notice-fg: red">
+<OuiNotice title="Warning" style="--notice-fg: red; --notice-bg: #ccc">
   <template #icon><OuiClose></template>
   You should not do that!
 </OuiNotice>
