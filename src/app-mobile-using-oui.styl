@@ -1,5 +1,4 @@
-@require "../stylus/index.styl";
-@require "../stylus/theme.styl";
+@require "../stylus/default-app.styl";
 
 :root {
   --footer-bg: var(--t3-bg);
@@ -9,7 +8,19 @@ body, html {
   padding: 0;
   margin: 0;
   height: 100%;
-  background: var(--footer-bg);
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+// BOTTOM
+html {
+  background: transparent;
+}
+
+// TOP
+body {
+  background: transparent;
 }
 
 #app {
@@ -19,31 +30,77 @@ body, html {
 
 .app-mobile {
   use: stack-y;
-  height: 100%; 
-  // use: safe-margin;
-}
+  height: 100%;
+  position: relative;
 
-main {
-  use: grow;
-  use: scroll;
-}
+  .box {
+    position: fixed;
+    width: 100%;
+    height: 400px;
+    top: var(--visible-height);
+    z-index: 999999;
+    background: red;
+  }
 
-header, footer {
-  min-height: 44;
-  background: var(--footer-bg);
-  padding-left: -safe-left;
-  padding-right: -safe-right;
-}
+  main {
+    use: grow;
+    use: scroll;
+    background: white;
+  }
 
-header {
-  padding-top: -safe-top;
-}
+  header, footer {
+    min-height: 44;
+    background: var(--footer-bg);
 
-footer {
-  padding-bottom: -safe-bottom;
+    .virtual-keyboard & {
+      // display: none;
+    }
+  }
 
-  .virtual-keyboard & {
-    background: lime;
-    padding-bottom: 0;
+  header {
+    background: lightblue;
+    padding: 8;
+  }
+
+  footer {
+    background: purple;
+
+    .virtual-keyboard & {
+      background: lime;
+      padding-bottom: 0;
+    }
+  }
+
+  .demo-section {
+    padding: 16px;
+    border-bottom: 1px solid var(--s2-bg);
+
+    h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--s2-fg);
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .demo-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .demo-result {
+    background: var(--s2-bg);
+    color: var(--s2-fg);
+    font-size: 14px;
+  }
+
+  .demo-notice-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 12px;
   }
 }

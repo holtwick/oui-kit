@@ -23,11 +23,11 @@ export function useDialog<T extends Component>(component?: T) {
     dispose.add(onEnterFree(() => {
       const el = document.querySelector('._focus') as HTMLElement
       if (el)
-        el.focus()
+        el.focus({ preventScroll: true })
     }, () => {
       const el = document.querySelector('._focus_fake') as HTMLElement
       if (el)
-        el.focus()
+        el.focus({ preventScroll: true })
     }))
 
     const result = dialogApp.awaitDone

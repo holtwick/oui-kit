@@ -9,7 +9,7 @@
   use: center;
   text-align: center;
   color: var(--s2-fg);
-  background: inherit;
+  background: var(--bg, inherit);
   overflow: auto;
 
   &._notice_cover {
@@ -17,10 +17,12 @@
     left: 0;
     top: 0;
     right: 0;
-    padding: -safe;
     height: var(--visible-height, 100%);
     will-change: transform;
     isolation: isolate;
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
   }
 
   &-body {

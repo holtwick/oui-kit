@@ -100,9 +100,9 @@ function didOpen() {
       const el = root.value.querySelector('._focus')
         ?? root.value.querySelector('input,button,select')
         ?? root.value
-      el.focus()
+      el.focus({ preventScroll: true })
     }, () => {
-      root.value.querySelector('._focus_fail')?.focus()
+      root.value.querySelector('._focus_fail')?.focus({ preventScroll: true })
     }))
   }
 

@@ -52,6 +52,6 @@ export const vNoSelection = {
 export const vAutofocus = {
   mounted: (el: HTMLElement, _binding: DirectiveBinding) => {
     log('focus', el)
-    setTimeout(() => el.focus(), 50)
+    setTimeout(() => el.focus({ preventScroll: true }), 50)
   },
 }

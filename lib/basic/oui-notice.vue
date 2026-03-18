@@ -20,7 +20,7 @@ watch(root, (el) => {
     if (el) {
       (el.querySelector('._focus')
         ?? el.querySelector('input,button,select')
-        ?? el).focus()
+        ?? el).focus({ preventScroll: true })
     }
   }, 0)
 }, { immediate: true })

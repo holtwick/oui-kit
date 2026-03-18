@@ -36,6 +36,7 @@ function isActive() {
   return document.documentElement.classList.contains('oui-mobile')
 }
 
+
 if (useSingleton('oui-mobile') && isMobile()) {
   log('init')
 
@@ -47,10 +48,23 @@ if (useSingleton('oui-mobile') && isMobile()) {
       if (!isActive())
         return
       try {
+        // Reset any iOS-induced window scroll (happens even with overflow:hidden).
+        // visualViewport.scroll fires when iOS shifts the visual viewport to show
+        // a focused input above the keyboard – scrollTo(0,0) cancels that shift.
+        if (window.scrollY !== 0)
+          window.scrollTo(0, 0)
+
         // Adjust the height!
-        const height = `${window.visualViewport?.height.toString()}px`
+        const newHeight = window.visualViewport?.height ?? 0
+        const prevHeight = Number.parseFloat(document.documentElement.style.getPropertyValue('--visible-height') || '0')
+        // Only animate when keyboard appears (height shrinks), not when it hides (height grows)
+        if (newHeight < prevHeight)
+          document.documentElement.classList.add('virtual-keyboard-transition')
+        else
+          document.documentElement.classList.remove('virtual-keyboard-transition')
+
+        const height = `${newHeight}px`
         log(`resize height=${height}`)
-        // document.documentElement.style.height = `${window.visualViewport?.height.toString()}px`
         document.documentElement.style.setProperty('--visible-height', height)
 
         await nextTick()
@@ -87,6 +101,22 @@ if (useSingleton('oui-mobile') && isMobile()) {
     try {
       useEventListener(window.visualViewport, 'resize', resizeHandler)
       useEventListener(window.visualViewport, 'scroll', resizeHandler)
+
+      // Intercept taps on non-focused inputs: prevent Safari's native focus+scroll,
+      // apply our own focus({ preventScroll: true }) instead. The keyboard still
+      // opens because we're synchronously inside a user-gesture handler.
+      // Only active when keyboard is currently closed (no input already focused).
+      useEventListener(window, 'touchend', (ev) => {
+        if (!isActive())
+          return
+        const target = ev.target as HTMLElement
+        if (!target?.matches('input,textarea,[contenteditable]'))
+          return
+        if (document.activeElement?.matches('input,textarea,[contenteditable]'))
+          return
+        ev.preventDefault()
+        target.focus({ preventScroll: true })
+      }, { capture: true, passive: false })
 
       // if (props.mode === 'app') {
       // Intercept `touchmove` where no scrolling is planned in our UI
