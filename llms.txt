@@ -40,6 +40,7 @@ import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
 - [lib/basic/oui-notice.md](lib/basic/oui-notice.md): OuiNotice details
 - [lib/basic/oui-log.md](lib/basic/oui-log.md): OuiLog details
 - [lib/basic/oui-file.md](lib/basic/oui-file.md): OuiFile details
+- [lib/basic/oui-login.md](lib/basic/oui-login.md): OuiLogin details
 - [lib/basic/oui-dark.md](lib/basic/oui-dark.md): OuiDark details
 - [lib/basic/oui-virtual-list.md](lib/basic/oui-virtual-list.md): OuiVirtualList details
 - [lib/basic/oui-tableview.md](lib/basic/oui-tableview.md): OuiTableview details

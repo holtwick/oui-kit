@@ -1,20 +1,57 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
-import { OuiLogin } from '@/lib'
+import { reactive, ref } from 'vue'
+import { OuiCheckbox, OuiDemo, OuiInput, OuiLogin } from '@/lib'
 
 const state = reactive({
-  title: 'Notice',
-  message: 'Lorem, ipsum dolor sit amet consectetur elit.\n\nFacilis ullam quis, nulla adipisci esse voluptate dolor aliquam architecto dignissimos necessitatibus quaerat, excepturi laborum, debitis alias veritatis enim fugiat exercitationem consectetur!',
-  icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
-  cover: false,
-  demoInput: '',
-  showNotice: true,
-  showTitle: true,
-  showIcon: true,
-  iconColor: 'red',
+  title: 'Sign In',
+  checking: false,
+  error: '',
+  username: '',
+  password: '',
+  loggedInAs: '',
 })
+
+async function handleLogin(username: string, password: string) {
+  state.username = username
+  state.password = password
+  state.checking = true
+  state.error = ''
+  state.loggedInAs = ''
+
+  await new Promise(r => setTimeout(r, 1500))
+
+  if (username === 'admin' && password === 'admin') {
+    state.loggedInAs = username
+  }
+  else {
+    state.error = 'Invalid username or password.'
+  }
+
+  state.checking = false
+}
+
+function handleLogout() {
+  state.loggedInAs = ''
+  state.error = ''
+}
 </script>
 
 <template>
-  <OuiLogin :message="state.message" />
+  <OuiDemo :state="state">
+    <OuiInput v-model="state.title" title="title" />
+    <OuiInput v-model="state.error" title="error" />
+    <OuiCheckbox v-model="state.checking" title="checking" switch />
+  </OuiDemo>
+
+  <div v-if="state.loggedInAs" style="padding: 1rem; text-align: center;">
+    <p>Logged in as <strong>{{ state.loggedInAs }}</strong></p>
+    <button @click="handleLogout">Logout</button>
+  </div>
+  <OuiLogin
+    v-else
+    :title="state.title"
+    :checking="state.checking"
+    :error="state.error || undefined"
+    @login="handleLogin"
+  />
 </template>
