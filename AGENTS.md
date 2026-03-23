@@ -24,3 +24,21 @@
 
 - Title format: [oui] <Title>
 - Always run `pnpm lint:fix` and `pnpm test --run` before committing.
+
+## Documentation maintenance
+
+When adding, removing, or significantly changing components, composables, CSS variables, or theming:
+
+- **Update [COMPONENTS.md](COMPONENTS.md)**: Keep the props tables, events, slots, and examples accurate.
+- **Update [llms.txt](llms.txt)**: Keep the module overview and export lists in sync with `lib/lib.ts` and the module index files.
+- **Update [stylus/README.md](stylus/README.md)**: If CSS variables or naming conventions change.
+
+These files are the primary reference for AI assistants working in this project. Stale documentation is worse than no documentation.
+
+### Key conventions to preserve
+
+- CSS variable naming: `--[level]-[style]-[state]` (e.g. `--p1-fg`, `--input-border-hover`)
+- Levels: `n0` = neutral, `p1` = primary, `s2` = secondary, `t3` = tertiary
+- Dark mode: `.dark` class on `html` element – not `@media (prefers-color-scheme: dark)`
+- CSS modifier classes: `_active` (underscore prefix), not `-active`
+- Component CSS classes: `oui-[name]` and `oui-[name]-[part]`

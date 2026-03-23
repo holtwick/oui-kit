@@ -1,0 +1,117 @@
+# Oui Kit – Vue 3 Component Library
+
+> A lightweight, TypeScript-first Vue 3 UI component library with a Stylus-based theming system.
+
+- npm: `oui-kit`
+- Version: 0.38.0
+- License: MIT
+- Live demo: https://oui.holtwick.de
+
+## Installation
+
+```bash
+npm install oui-kit
+```
+
+```ts
+// main.ts
+import 'oui-kit/css'
+```
+
+All components are named with the `Oui` prefix and imported from `oui-kit`:
+
+```ts
+import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
+```
+
+## Key Facts
+
+- All components are **headless by default** – import `oui-kit/css` for the default theme
+- Supports **dark mode** via `OuiDark` component and CSS custom properties
+- Components use **v-model** for two-way binding where applicable
+- Mobile **bottom sheet** behavior is built into OuiModal
+- The library is **tree-shakeable**
+
+## Documentation Files
+
+- [COMPONENTS.md](COMPONENTS.md): Full component API reference (props, events, slots, examples)
+- [lib/basic/oui-button.md](lib/basic/oui-button.md): OuiButton details
+- [lib/basic/oui-text.md](lib/basic/oui-text.md): OuiText details
+- [lib/basic/oui-notice.md](lib/basic/oui-notice.md): OuiNotice details
+- [lib/basic/oui-log.md](lib/basic/oui-log.md): OuiLog details
+- [lib/basic/oui-file.md](lib/basic/oui-file.md): OuiFile details
+- [lib/basic/oui-dark.md](lib/basic/oui-dark.md): OuiDark details
+- [lib/basic/oui-virtual-list.md](lib/basic/oui-virtual-list.md): OuiVirtualList details
+- [lib/basic/oui-tableview.md](lib/basic/oui-tableview.md): OuiTableview details
+- [lib/basic/oui-resizeable.md](lib/basic/oui-resizeable.md): OuiResizeable details
+- [lib/basic/oui-day.md](lib/basic/oui-day.md): OuiDay details
+- [lib/basic/oui-day-range.md](lib/basic/oui-day-range.md): OuiDayRange details
+- [lib/float/oui-float.md](lib/float/oui-float.md): OuiFloat / floating UI details
+- [lib/float/README.md](lib/float/README.md): Float module overview
+- [lib/modal/oui-modal.md](lib/modal/oui-modal.md): OuiModal details
+- [lib/modal/oui-dialog.md](lib/modal/oui-dialog.md): OuiDialog details
+- [lib/layout/README.md](lib/layout/README.md): Layout components (OuiStackX, OuiStackY, OuiSpace)
+- [lib/notification/README.md](lib/notification/README.md): Notification system
+- [lib/object/README.md](lib/object/README.md): OuiObject details
+- [lib/mobile/oui-mobile.md](lib/mobile/oui-mobile.md): OuiMobileActivator details
+
+## Module Overview
+
+### Basic (`import { ... } from 'oui-kit'`)
+
+Form inputs: OuiInput, OuiInputNumber, OuiInputColor, OuiInputGroup, OuiPassword, OuiTextarea, OuiCheckbox, OuiSelect, OuiCombobox, OuiSegmented, OuiFile, OuiDate, OuiDatetime, OuiDay, OuiDayRange, OuiStars, OuiSlidingPill
+Display: OuiButton, OuiCard, OuiText, OuiNotice, OuiSeparator, OuiItems, OuiTable, OuiTableview, OuiVirtualList, OuiLog, OuiQrcode, OuiWait
+Utilities: OuiDebug, OuiDemo, OuiDark, OuiClose, OuiFormItem, OuiPasswordMeter
+Advanced: OuiDraggable, OuiResizeable, OuiLoginCreate, OuiLogin
+
+### Float (`import { OuiFloat, OuiMenu, OuiTooltipActivator, useMenu } from 'oui-kit'`)
+
+Floating UI components built on `@floating-ui/vue`: tooltips, context menus, popovers.
+
+### Layout (`import { OuiStackX, OuiStackY, OuiSpace } from 'oui-kit'`)
+
+Flexbox layout helpers.
+
+### Modal (`import { OuiModal, OuiDialog, ouiAlert, ouiConfirm, ouiPrompt, useDialog } from 'oui-kit'`)
+
+Modal dialogs with mobile bottom-sheet support.
+
+### Notification (`import { emitNotificationInfo, emitNotificationWarn, emitNotificationError, useNotification, OuiNotificationActivator } from 'oui-kit'`)
+
+Toast-like notification system.
+
+### Object (`import { OuiObject } from 'oui-kit'`)
+
+Structured data display component.
+
+### Mobile (`import { OuiMobileActivator } from 'oui-kit'`)
+
+Mobile-specific UI activation component.
+
+## Theming
+
+```styl
+// Import in your Stylus entry
+@import 'oui-kit/stylus'
+
+// Override CSS custom properties for theming:
+// --oui-color-primary, --oui-color-danger, --oui-color-success, --oui-color-neutral
+// --oui-radius, --oui-font-size, --oui-spacing
+```
+
+## CSS Variable Naming Convention
+
+**Schema:** `--[level]-[style]-[state]`
+
+Levels: `n0` (neutral/gray), `p1` (primary/blue), `s2` (secondary), `t3` (tertiary)
+Style: `fg` (color), `bg` (background), `border`, `shadow`, `radius`
+State: `hover`, `focus`, `active`, `disabled`
+
+Examples: `--p1-500`, `--fg`, `--bg`, `--input-border-hover`, `--s2-bg`
+
+**Dark mode:** Use `.dark` class on `html` element – NOT `@media (prefers-color-scheme: dark)`
+
+**Modifier classes:** Underscore prefix: `_active`, `_disabled` (not `-active`)
+
+Full theming docs: [COMPONENTS.md#theming--css-variables](COMPONENTS.md#theming--css-variables)
+Stylus framework docs: [stylus/README.md](stylus/README.md)
