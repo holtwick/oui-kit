@@ -1,31 +1,40 @@
 # oui-object
 
-Show JS objects as Vue view. Great for debugging.
+Renders a JavaScript object as an interactive, collapsible tree view. Great for debugging and inspecting data at runtime.
 
 > [!NOTE]
-> **oui** componentents are *headless* i.e. they do not come with CSS by default. These examples import CSS syles, but you are free to do it from scratch as well.
+> **oui** components are *headless* – they do not ship with CSS by default. Import the CSS explicitly.
 
-This is a fork of [object-visualizer](https://github.com/iendeavor/object-visualizer). Thanks for the great work!
+Based on [object-visualizer](https://github.com/iendeavor/object-visualizer).
 
-## Usage
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `any` | *(required)* | The JavaScript value to display (object, array, primitive, etc.). |
+| `title` | `string` | `'value'` | Root node label shown at the top of the tree. |
+
+## Example
 
 ```vue
 <script lang="ts" setup>
-import { OuiObject } from 'oui-object'
+import { OuiObject } from 'oui-kit'
+import 'oui-kit/css'
 
-import 'oui-object/css'
-
-const sample = {
-  a: 'Hello',
-  b: 2,
-  c: [1, 2, 3],
-  d: {
-    deeper: true,
-  },
+const data = {
+  name: 'Alice',
+  age: 30,
+  address: { city: 'Berlin', zip: '10115' },
+  tags: ['vue', 'typescript'],
 }
 </script>
 
 <template>
-  <OuiObject :value="sample" title="sample" />
+  <OuiObject :value="data" title="user" />
 </template>
 ```
+
+## Notes
+
+- Nodes up to depth 1 are expanded by default; deeper nodes start collapsed.
+- Works with any serialisable value: plain objects, arrays, strings, numbers, booleans, `null`.

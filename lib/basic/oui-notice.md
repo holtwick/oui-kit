@@ -1,19 +1,44 @@
 # oui-notice
 
-A prominent overlay containing a message, suitable e. g. for warning messages. It covers everything up to parent element with `position: relative`. If icon is used, it should be an SVG.
+A prominent notice/overlay component for warnings, errors, or important messages. Covers the nearest `position: relative` parent. Supports an optional SVG icon.
 
-- `title?: string`
-- `#default` Message
-- `#title` Title (alternative to prop `title`)
-- `#icon` SVG Icon
+## Props
 
-It is possible to set CSS variable `--notice-fg` for the icon color.
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | `undefined` | Title text. Alternative to the `title` slot. |
+| `cover` | `boolean` | `undefined` | If `true`, renders as a full-screen overlay via `<Teleport to="body">` with focus trapping. |
 
-`--notice-bg` to set the background color.
+## Slots
+
+| Slot | Description |
+|------|-------------|
+| `(default)` | Message body content. |
+| `title` | Custom title content. Falls back to the `title` prop. |
+| `icon` | SVG icon shown above the title. |
+
+## CSS Variables
+
+| Variable | Description |
+|----------|-------------|
+| `--notice-fg` | Icon and text foreground color. |
+| `--notice-bg` | Background color of the notice box. |
+
+## Example
 
 ```vue
-<OuiNotice title="Warning" style="--notice-fg: red; --notice-bg: #ccc">
-  <template #icon><OuiClose></template>
+<OuiNotice title="Warning">
   You should not do that!
 </OuiNotice>
+
+<!-- With icon and custom colors -->
+<OuiNotice title="Error" style="--notice-fg: red; --notice-bg: #fee">
+  <template #icon>
+    <svg>…</svg>
+  </template>
+  Something went wrong.
+</OuiNotice>
+
+<!-- Full-screen cover overlay with focus trap -->
+<OuiNotice cover title="Loading…" />
 ```

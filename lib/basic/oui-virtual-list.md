@@ -1,32 +1,56 @@
 # oui-virtual-list
 
-A virtual list component that lazy loads data as the user scrolls. This component is designed to be used with large data sets.
+A high-performance virtual list that renders only the rows currently visible in the viewport. Essential for large datasets (thousands of rows).
 
-It is used in `oui-tableview` to render the rows of the table.
+Used internally by `OuiTableview`.
 
-## Basic usage
+## Props
 
-```ts
-const columns: OuiTableColumn[] = [
-  { title: '#', name: 'id', sortable: false },
-  { title: 'One', name: 'one', sortable: true, width: 200 },
-  { title: 'Two', name: 'two', sortable: true, footer: 'Two feet' },
-  { title: 'Action', name: 'action', align: 'right' },
-]
-```
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `data` | `T[]` | *(required)* | Array of row data objects. Generic type `T`. |
+| `rowHeight` | `number` | `20` | Height of each row in pixels. All rows must have the same height. |
+| `rowBuffer` | `number` | `5` | Number of extra rows to render above and below the visible area. |
+| `scrollToEnd` | `boolean` | `false` | Automatically scroll to the last row when `data` changes (useful for logs). |
+| `emitDelay` | `number` | `100` | Debounce delay in ms before the `visible` event fires after scrolling. |
 
-Then use the component:
+## Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `visible` | `(offset: number, limit: number)` | Fires when the visible range changes. Use for server-side pagination: load rows `offset` to `offset + limit`. |
+| `scrollX` | `(x: number)` | Fires when the list scrolls horizontally. |
+
+## Slots
+
+| Slot | Scope | Description |
+|------|-------|-------------|
+| `(default)` | `{ item: T, index: number }` | Template for each visible row. |
+
+## Example
 
 ```vue
 <OuiVirtualList
-  :data="data as any"
-  :height="20"
+  :data="rows"
+  :row-height="32"
+  :scroll-to-end="isLiveLog"
   style="height: 400px"
-  @visible="setVisible"
+  @visible="loadPage"
 >
   <template #default="{ item, index }">
-    {{ index }}.
-    <tt>{{ item.id }}</tt>
+    <span>{{ index + 1 }}.</span>
+    <span>{{ item.name }}</span>
   </template>
 </OuiVirtualList>
 ```
+
+```ts
+function loadPage(offset: number, limit: number) {
+  // fetch rows[offset..offset+limit] from server
+}
+```
+
+## Notes
+
+- The parent element **must** have a fixed height (e.g. `style="height: 400px"` or via CSS).
+- Row height is uniform — variable row heights are not supported.

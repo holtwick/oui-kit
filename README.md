@@ -8,7 +8,7 @@
 [![license](https://img.shields.io/npm/l/oui-kit.svg)](https://github.com/holtwick/oui/blob/main/LICENSE)
 [![downloads](https://img.shields.io/npm/dm/oui-kit.svg)](https://www.npmjs.com/package/oui-kit)
 
-[🚀 Get Started](#installation) • [📚 Documentation](https://oui.holtwick.de) • [🎮 Live Demo](https://oui.holtwick.de)
+[🚀 Get Started](#installation) • [📚 Documentation](https://oui.holtwick.de) • [🎮 Live Demo](https://oui.holtwick.de) • [📖 Component Reference](./COMPONENTS.md)
 
 ## ✨ Why Oui Kit?
 
@@ -28,9 +28,7 @@
 
 <img src="./qrcode.png" alt="QR Code to demo website" style="max-width: 20rem">
 
-## 🚀 Quick Start
-
-Get up and running in under 2 minutes!
+## 🚀 Installation
 
 ```bash
 npm install oui-kit
@@ -49,7 +47,6 @@ yarn add oui-kit
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// Import oui-kit styles
 import 'oui-kit/css'
 
 const app = createApp(App)
@@ -60,126 +57,130 @@ app.mount('#app')
 
 ```vue
 <script setup lang="ts">
-import { OuiButton, OuiModal, useNotification } from 'oui-kit'
+import { emitNotificationInfo, OuiButton, OuiModal } from 'oui-kit'
 import { ref } from 'vue'
 
 const showModal = ref(false)
-const { notify } = useNotification()
-
-function handleSuccess() {
-  notify('🎉 Success! Your component is working!', 'success')
-}
-
-function handleInfo() {
-  notify('ℹ️ This is an info message', 'info')
-}
 </script>
 
 <template>
-  <div class="demo-container">
-    <h2>Welcome to Oui Kit!</h2>
+  <div>
+    <OuiButton mode="primary" @click="emitNotificationInfo('Success', 'It works!')">
+      Show Notification
+    </OuiButton>
 
-    <div class="button-group">
-      <OuiButton variant="primary" @click="handleSuccess">
-        🎉 Show Success
-      </OuiButton>
+    <OuiButton mode="outline" @click="showModal = true">
+      Open Modal
+    </OuiButton>
 
-      <OuiButton variant="secondary" @click="handleInfo">
-        ℹ️ Show Info
-      </OuiButton>
-
-      <OuiButton variant="outline" @click="showModal = true">
-        📱 Open Modal
-      </OuiButton>
-    </div>
-
-    <OuiModal v-model="showModal" title="🎨 Hello from Oui Kit!">
+    <OuiModal v-model="showModal" title="Hello from Oui Kit!" close>
       <p>This modal demonstrates the power of Oui Kit components.</p>
-      <p>Enjoy building beautiful Vue.js applications! 🚀</p>
     </OuiModal>
   </div>
 </template>
 
 <style lang="stylus">
 @import 'oui-kit/stylus'
-
-.demo-container
-  padding: -spacing-lg
-  max-width: 600px
-  margin: 0 auto
-
-.button-group
-  display: flex
-  gap: -spacing-md
-  flex-wrap: wrap
-  margin-top: -spacing-md
 </style>
+```
+
+### Notifications
+
+Add the activator once in your app root, then emit notifications from anywhere:
+
+```vue
+<!-- App.vue -->
+<OuiNotificationActivator />
+```
+
+```ts
+import { emitNotificationInfo, emitNotificationWarn, emitNotificationError } from 'oui-kit'
+
+emitNotificationInfo('Saved', 'Your changes have been saved.')
+emitNotificationWarn('Low storage', 'Less than 10% remaining.')
+emitNotificationError('Upload failed', 'Please try again.')
 ```
 
 ## 🧩 Available Components
 
-### 🎨 UI Components
+See [COMPONENTS.md](./COMPONENTS.md) for the full API reference including props, events, slots, and examples.
 
-| Component | Description | Features |
-|-----------|-------------|----------|
-| **OuiButton** | Versatile button component | Multiple variants, sizes, loading states |
-| **OuiModal** | Beautiful modal dialogs | Backdrop blur, animations, accessibility |
-| **OuiNotification** | Toast notification system | Auto-dismiss, positions, custom styling |
-| **OuiFloat** | Floating positioning | Tooltips, dropdowns, popovers |
+### Form Inputs
+`OuiButton` · `OuiInput` · `OuiInputNumber` · `OuiInputColor` · `OuiInputGroup` · `OuiTextarea` · `OuiPassword` · `OuiCheckbox` · `OuiSelect` · `OuiCombobox` · `OuiSegmented` · `OuiFile` · `OuiDate` · `OuiDatetime` · `OuiDay` · `OuiDayRange` · `OuiStars` · `OuiSlidingPill`
 
-### 🔧 Composables & Utilities
+### Display
+`OuiCard` · `OuiText` · `OuiNotice` · `OuiSeparator` · `OuiItems` · `OuiTable` · `OuiTableview` · `OuiVirtualList` · `OuiLog` · `OuiQrcode` · `OuiWait`
 
-| Composable | Description | Use Case |
-|------------|-------------|----------|
-| **useNotification** | Reactive notification system | Show success/error messages |
-| **useModal** | Modal state management | Programmatic modal control |
-| **useFloat** | Floating element positioning | Tooltips, dropdowns, menus |
+### Layout
+`OuiStackX` · `OuiStackY` · `OuiSpace`
 
-### Tree Shaking
+### Overlay & Float
+`OuiFloat` · `OuiMenu` · `OuiTooltipActivator`
 
-```typescript
-// Import only what you need
-import * as OuiKit from 'oui-kit'
-// Or import everything (not recommended for production)
-import { OuiButton, OuiModal, useNotification } from 'oui-kit'
-import { OuiButton } from 'oui-kit/button'
-import { OuiModal } from 'oui-kit/modal'
+### Modal & Dialog
+`OuiModal` · `OuiDialog` · `ouiAlert()` · `ouiConfirm()` · `ouiPrompt()`
 
-import { useNotification } from 'oui-kit/notification'
+### Notification
+`OuiNotificationActivator` · `emitNotificationInfo()` · `emitNotificationWarn()` · `emitNotificationError()`
+
+### Utilities
+`OuiDark` · `OuiObject` · `OuiMobileActivator` · `OuiResizeable` · `OuiDraggable`
+
+## 🎨 Theming
+
+Oui uses CSS custom properties with a structured naming scheme: `--[level]-[style]-[state]`.
+
+```css
+:root {
+  /* Override the primary colour palette */
+  --p1-500: #e85d04;
+  --p1-400: #f48c06;
+  --p1-600: #dc2f02;
+}
 ```
+
+Dark mode is activated via the `.dark` class on `<html>` (not via `@media`):
+
+```ts
+import { useDark } from '@vueuse/core'
+const isDark = useDark() // automatically toggles .dark on <html>
+```
+
+See [COMPONENTS.md – Theming](./COMPONENTS.md#theming--css-variables) for the full variable reference.
 
 ## 🛠️ Development
 
 ### Prerequisites
 
 - Node.js 18+
-- pnpm (recommended) or npm
+- pnpm (recommended)
+
+### Scripts
+
+```bash
+pnpm install       # install dependencies
+pnpm dev           # start dev server
+pnpm build         # build library
+pnpm test --run    # run tests
+pnpm lint          # lint
+pnpm lint:fix      # auto-fix lint issues
+```
 
 ### Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details on:
-
-- Code style and formatting
-- Testing requirements
-- Git workflow and commit conventions
-- Development setup
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
 
 ## Browser Support
 
-oui-kit supports all modern browsers:
-
-- Chrome 88+
-- Firefox 85+
-- Safari 14+
-- Edge 88+
+Chrome 88+ · Firefox 85+ · Safari 14+ · Edge 88+
 
 ## License
 
-MIT License - see [LICENSE](./LICENSE) file for details.
+MIT – see [LICENSE](./LICENSE) for details.
 
 ## Acknowledgments
 
-Derives from this previous work:
+Derives from previous work:
 
 - [twindy](https://github.com/holtwick/twindy)
 - [twindy-headless](https://github.com/holtwick/twindy-headless)
@@ -187,6 +188,7 @@ Derives from this previous work:
 ## Support
 
 - 📖 [Documentation](https://oui.holtwick.de)
+- 📖 [Component Reference](./COMPONENTS.md)
 - 🐛 [Issues](https://github.com/holtwick/oui/issues)
 - 💬 [Discussions](https://github.com/holtwick/oui/discussions)
 - ❤️ [Sponsor](https://github.com/sponsors/holtwick)
