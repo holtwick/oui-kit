@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { OuiCheckbox, OuiDemo, OuiInput, OuiLogin } from '@/lib'
 
 const state = reactive({
@@ -45,7 +45,9 @@ function handleLogout() {
 
   <div v-if="state.loggedInAs" style="padding: 1rem; text-align: center;">
     <p>Logged in as <strong>{{ state.loggedInAs }}</strong></p>
-    <button @click="handleLogout">Logout</button>
+    <button @click="handleLogout">
+      Logout
+    </button>
   </div>
   <OuiLogin
     v-else

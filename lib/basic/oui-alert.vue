@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { tt } from './i18n'
 import OuiClose from './oui-close.vue'
 import './oui-alert.styl'
 
@@ -9,6 +10,7 @@ defineProps<{
   title?: string
   /** Show a dismiss button */
   dismissible?: boolean
+  tooltipClose?: string
 }>()
 
 const emit = defineEmits<{
@@ -37,7 +39,7 @@ function dismiss() {
       <div class="oui-alert-body">
         <slot />
       </div>
-      <button v-if="dismissible" class="oui-alert-close" :aria-label="'Close'" @click="dismiss">
+      <button v-if="dismissible" class="oui-alert-close" :aria-label="tooltipClose ?? tt('Close', 'oui.alert.close')" :tooltip="tooltipClose ?? tt('Close', 'oui.alert.close')" @click="dismiss">
         <OuiClose />
       </button>
     </div>

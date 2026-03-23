@@ -19,16 +19,16 @@ const state = reactive({
   </OuiDemo>
 
   <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-    <OuiAlert mode="info" :title="state.title" :dismissible="state.dismissible" v-model="state.show">
+    <OuiAlert v-model="state.show" mode="info" :title="state.title" :dismissible="state.dismissible">
       {{ state.message }}
     </OuiAlert>
-    <OuiAlert mode="success" :title="state.title" :dismissible="state.dismissible" v-model="state.show">
+    <OuiAlert v-model="state.show" mode="success" :title="state.title" :dismissible="state.dismissible">
       {{ state.message }}
     </OuiAlert>
-    <OuiAlert mode="warn" :title="state.title" :dismissible="state.dismissible" v-model="state.show">
+    <OuiAlert v-model="state.show" mode="warn" :title="state.title" :dismissible="state.dismissible">
       {{ state.message }}
     </OuiAlert>
-    <OuiAlert mode="error" :title="state.title" :dismissible="state.dismissible" v-model="state.show">
+    <OuiAlert v-model="state.show" mode="error" :title="state.title" :dismissible="state.dismissible">
       {{ state.message }}
     </OuiAlert>
   </div>

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { tt } from './i18n'
+import OuiAlert from './oui-alert.vue'
 import OuiButton from './oui-button.vue'
 import OuiInput from './oui-input.vue'
 import OuiNotice from './oui-notice.vue'
-import OuiAlert from './oui-alert.vue'
 import OuiPassword from './oui-password.vue'
 import OuiWait from './oui-wait.vue'
 
