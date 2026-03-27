@@ -105,3 +105,4 @@ playwright-report
 test-results
 
 www
+.claude/settings.local.json
