@@ -31,6 +31,7 @@ import 'oui-kit/css'
 - [Display](#display)
   - [OuiCard](#ouicard)
   - [OuiText](#ouitext)
+  - [OuiAlert](#ouialert)
   - [OuiNotice](#ouinotice)
   - [OuiSeparator](#ouiseparator)
   - [OuiItems](#ouiitems)
@@ -495,6 +496,18 @@ import { OuiText } from 'oui-kit'
 ```
 
 See [lib/basic/oui-text.md](lib/basic/oui-text.md) for full docs.
+
+---
+
+### OuiAlert
+
+Inline alert box for feedback messages with optional title and dismiss button.
+
+```ts
+import { OuiAlert } from 'oui-kit'
+```
+
+See [lib/basic/oui-alert.md](lib/basic/oui-alert.md) for full docs.
 
 ---
 

@@ -35,6 +35,7 @@ import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
 ## Documentation Files
 
 - [COMPONENTS.md](COMPONENTS.md): Full component API reference (props, events, slots, examples)
+- [lib/basic/oui-alert.md](lib/basic/oui-alert.md): OuiAlert details
 - [lib/basic/oui-button.md](lib/basic/oui-button.md): OuiButton details
 - [lib/basic/oui-text.md](lib/basic/oui-text.md): OuiText details
 - [lib/basic/oui-notice.md](lib/basic/oui-notice.md): OuiNotice details
@@ -61,7 +62,7 @@ import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
 ### Basic (`import { ... } from 'oui-kit'`)
 
 Form inputs: OuiInput, OuiInputNumber, OuiInputColor, OuiInputGroup, OuiPassword, OuiTextarea, OuiCheckbox, OuiSelect, OuiCombobox, OuiSegmented, OuiFile, OuiDate, OuiDatetime, OuiDay, OuiDayRange, OuiStars, OuiSlidingPill
-Display: OuiButton, OuiCard, OuiText, OuiNotice, OuiSeparator, OuiItems, OuiTable, OuiTableview, OuiVirtualList, OuiLog, OuiQrcode, OuiWait
+Display: OuiButton, OuiAlert, OuiCard, OuiText, OuiNotice, OuiSeparator, OuiItems, OuiTable, OuiTableview, OuiVirtualList, OuiLog, OuiQrcode, OuiWait
 Utilities: OuiDebug, OuiDemo, OuiDark, OuiClose, OuiFormItem, OuiPasswordMeter
 Advanced: OuiDraggable, OuiResizeable, OuiLoginCreate, OuiLogin
 
