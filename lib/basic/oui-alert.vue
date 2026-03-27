@@ -33,15 +33,17 @@ function dismiss() {
       :class="`_${mode ?? 'info'}`"
       role="alert"
     >
-      <div v-if="title" class="oui-alert-title">
-        {{ title }}
+      <div class="oui-alert-content">
+        <div v-if="title" class="oui-alert-title">
+          {{ title }}
+        </div>
+        <div class="oui-alert-body">
+          <slot />
+        </div>
+        <button v-if="dismissible" class="oui-alert-close" :aria-label="tooltipClose ?? tt('Close', 'oui.alert.close')" :tooltip="tooltipClose ?? tt('Close', 'oui.alert.close')" @click="dismiss">
+          <OuiClose />
+        </button>
       </div>
-      <div class="oui-alert-body">
-        <slot />
-      </div>
-      <button v-if="dismissible" class="oui-alert-close" :aria-label="tooltipClose ?? tt('Close', 'oui.alert.close')" :tooltip="tooltipClose ?? tt('Close', 'oui.alert.close')" @click="dismiss">
-        <OuiClose />
-      </button>
     </div>
   </Transition>
 </template>
