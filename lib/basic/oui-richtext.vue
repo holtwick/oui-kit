@@ -319,7 +319,7 @@ watch(() => model.value, (v) => {
   const ed = editor.value
   if (ed && v !== ed.getHTML()) {
     skipWatch = true
-    ed.commands.setContent(v ?? '', false)
+    ed.commands.setContent(v ?? '', { emitUpdate: false })
     nextTick(() => skipWatch = false)
   }
 })
