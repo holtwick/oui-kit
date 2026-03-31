@@ -1,0 +1,139 @@
+@require "../../stylus/index.styl";
+
+.oui-richtext {
+  oui-form();
+
+  &._bordered {
+    oui-input-default();
+    display: block;
+    padding: 0;
+    min-height: auto;
+  }
+
+  .tiptap {
+    outline: none;
+    min-height: rex(80);
+    padding: rex(8) rex(12);
+    line-height: 1.4;
+
+    strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    u {
+      text-decoration: underline;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    p + p {
+      margin-top: rex(4);
+    }
+
+    // Placeholder
+    p.is-editor-empty:first-child::before {
+      content: attr(data-placeholder);
+      float: left;
+      color: var(--n0-fg-muted, var(--s2-fg));
+      pointer-events: none;
+      height: 0;
+    }
+  }
+
+  &._disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &-mention {
+    background: var(--p1-bg-light, var(--p1-bg));
+    color: var(--p1-fg);
+    border-radius: rex(3);
+    padding: rex(1) rex(4);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  &-toolbar {
+    z-index: -z-index-popover;
+    display: flex;
+    gap: rex(2);
+    background: var(--n0-900, rgb(56, 56, 56));
+    border-radius: rex(6);
+    padding: rex(4);
+    box-shadow: rgba(15, 15, 15, 0.2) 0 9px 24px;
+
+    .dark & {
+      background: black;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: rex(28);
+      height: rex(28);
+      border: none;
+      background: transparent;
+      color: var(--n0-50, white);
+      border-radius: rex(4);
+      cursor: pointer;
+      font-size: rex(14);
+      padding: 0 rex(6);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      &._active {
+        background: rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    &-transition {
+      &-enter-active, &-leave-active {
+        transition: opacity 150ms ease-in-out;
+      }
+
+      &-enter-from, &-leave-to {
+        opacity: 0;
+      }
+    }
+  }
+
+  &-mentions {
+    z-index: -z-index-popover;
+    background: var(--bg);
+    border: 1px solid var(--t3-bg);
+    border-radius: rex(6);
+    box-shadow: rgba(15, 15, 15, 0.2) 0 9px 24px;
+    padding: rex(4);
+    max-height: rex(200);
+    overflow-y: auto;
+    min-width: rex(150);
+  }
+
+  &-mention-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: rex(6) rex(10);
+    border: none;
+    background: transparent;
+    color: var(--fg);
+    border-radius: rex(4);
+    cursor: pointer;
+    font-size: rex(14);
+
+    &:hover, &._active {
+      background: var(--p1-bg);
+      color: var(--p1-fg);
+    }
+  }
+}
