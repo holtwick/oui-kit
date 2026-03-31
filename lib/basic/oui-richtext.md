@@ -3,7 +3,7 @@
 A rich text editor component based on [TipTap](https://tiptap.dev/). It uses the external TipTap packages as optional dependencies. Make sure to add them to your app's `package.json`:
 
 ```bash
-pnpm add @tiptap/vue-3 @tiptap/pm @tiptap/starter-kit @tiptap/extension-underline @tiptap/extension-placeholder @tiptap/extension-mention @tiptap/suggestion
+pnpm add @tiptap/vue-3 @tiptap/pm @tiptap/starter-kit @tiptap/extension-placeholder @tiptap/extension-mention @tiptap/suggestion
 ```
 
 The component looks and behaves like `OuiTextarea` with autosize. It provides inline formatting (Bold, Italic, Underline) via a floating toolbar that appears when text is selected. Placeholders can be inserted by typing `@` which opens a suggestion dropdown.

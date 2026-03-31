@@ -168,14 +168,12 @@ async function initEditor() {
   const [
     { Editor },
     { default: StarterKit },
-    { default: Underline },
     { default: Placeholder },
     { default: Mention },
     { default: Suggestion },
   ] = await Promise.all([
     import('@tiptap/vue-3'),
     import('@tiptap/starter-kit'),
-    import('@tiptap/extension-underline'),
     import('@tiptap/extension-placeholder'),
     import('@tiptap/extension-mention'),
     import('@tiptap/suggestion'),
@@ -284,7 +282,6 @@ async function initEditor() {
         listItem: props.blocks ? {} : false,
         horizontalRule: props.blocks ? {} : false,
       }),
-      Underline,
       Placeholder.configure({
         placeholder: props.placeholder ?? '',
       }),

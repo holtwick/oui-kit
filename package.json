@@ -107,7 +107,6 @@
   "optionalDependencies": {
     "@tiptap/extension-mention": "^3.21.0",
     "@tiptap/extension-placeholder": "^3.21.0",
-    "@tiptap/extension-underline": "^3.21.0",
     "@tiptap/pm": "^3.21.0",
     "@tiptap/starter-kit": "^3.21.0",
     "@tiptap/suggestion": "^3.21.0",
@@ -121,7 +120,6 @@
     "@shikijs/markdown-it": "^4.0.2",
     "@tiptap/extension-mention": "^3.21.0",
     "@tiptap/extension-placeholder": "^3.21.0",
-    "@tiptap/extension-underline": "^3.21.0",
     "@tiptap/pm": "^3.21.0",
     "@tiptap/starter-kit": "^3.21.0",
     "@tiptap/suggestion": "^3.21.0",
