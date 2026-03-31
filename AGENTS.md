@@ -1,118 +1,88 @@
 # AGENTS.md
 
-## Dev environment tips
+Instructions for AI agents working in projects that **use** oui-kit as a dependency.
 
-- Use `pnpm install` to install dependencies.
-- Run `pnpm build` to build the library (runs `vite build` with TypeScript compilation and bundling).
-- Check `package.json` for available scripts.
-- Read JSDoc comments in source files (`lib/**/*.ts`) for inline API documentation and usage examples.
-- Read Markdown documentation files (e.g., `src/**/*.md`) for additional guides and examples.
-- Run and examine demo files (`src/**/*.demo.vue`) to understand component usage and examples.
-- Run and examine test specs (`lib/**/*.spec.ts`) to understand functionality, expected behavior, and integration patterns.
-- Check `README.md` for project overview, architecture, and usage patterns.
+> For developing oui-kit itself, see [CLAUDE.md](CLAUDE.md).
 
-## Testing instructions
+## What is oui-kit?
 
-- Run `pnpm test --run` to run all tests with Vitest.
-- Run `pnpm test --coverage` to check test coverage.
-- Run `pnpm lint` to check linting with ESLint.
-- Run `pnpm lint:fix` to auto-fix linting issues.
-- Fix any test or type errors until the whole suite is green.
-- Add or update tests for the code you change, even if nobody asked.
+A Vue 3 component library with a Stylus CSS framework. Import components from `oui-kit` and styles from `oui-kit/css` or Stylus presets.
 
-## PR instructions
+## Finding documentation
 
-- Title format: [oui] <Title>
-- Always run `pnpm lint:fix` and `pnpm test --run` before committing.
+- **[COMPONENTS.md](COMPONENTS.md)** - full component API reference (props, events, slots, examples)
+- **[llms.txt](llms.txt)** - AI-optimized project overview, export lists, module structure
+- **`lib/basic/oui-[name].md`** - per-component documentation with usage examples
+- **`lib/basic/oui-[name].demo.vue`** - interactive demos showing real usage patterns
 
-## Documentation maintenance
+Read `COMPONENTS.md` or the per-component `.md` files before using a component. They contain props tables, slot descriptions, and code examples.
 
-When adding, removing, or significantly changing components, composables, CSS variables, or theming:
+## Installation
 
-- **Update [COMPONENTS.md](COMPONENTS.md)**: Keep the props tables, events, slots, and examples accurate.
-- **Update [llms.txt](llms.txt)**: Keep the module overview and export lists in sync with `lib/lib.ts` and the module index files.
-- **Update [stylus/README.md](stylus/README.md)**: If CSS variables or naming conventions change.
-
-These files are the primary reference for AI assistants working in this project. Stale documentation is worse than no documentation.
-
-### Key conventions to preserve
-
-- CSS variable naming: `--[level]-[style]-[state]` (e.g. `--p1-fg`, `--input-border-hover`)
-- Levels: `n0` = neutral, `p1` = primary, `s2` = secondary, `t3` = tertiary
-- Dark mode: `.dark` class on `html` element – not `@media (prefers-color-scheme: dark)`
-- CSS modifier classes: `_active` (underscore prefix), not `-active`
-- Component CSS classes: `oui-[name]` and `oui-[name]-[part]`
-
-## Adding a new component
-
-### Files to create (in `lib/basic/`)
-
-| File | Required | Description |
-|------|----------|-------------|
-| `oui-[name].vue` | yes | Vue 3 component with `<script lang="ts" setup>` |
-| `oui-[name].styl` | yes | Stylus stylesheet |
-| `oui-[name].md` | yes | Markdown docs (props, events, slots, example) |
-| `oui-[name].demo.vue` | recommended | Interactive demo using `OuiDemo` wrapper |
-| `oui-[name].spec.ts` | for complex logic | Vitest unit test |
-
-### Registration checklist (4 places)
-
-1. **`lib/basic/index.ts`** – add export (keep alphabetical order):
-
-   ```ts
-   export { default as OuiName } from './oui-name.vue'
-   ```
-
-2. **`lib/basic/index.styl`** – add style import (keep alphabetical order):
-
-   ```styl
-   @require "./oui-name.styl";
-   ```
-
-3. **`COMPONENTS.md`** – add entry to the table of contents and a section with props table, events, slots, and usage example.
-
-4. **`llms.txt`** – two places:
-   - Documentation Files list: `- [lib/basic/oui-name.md](...): OuiName details`
-   - Module Overview Basic section: add component name to the correct category (Display, Form inputs, etc.)
-
-`lib/lib.ts` does **not** need to be changed — it re-exports `./basic` wholesale.
-
-### Vue component pattern
-
-```vue
-<script lang="ts" setup>
-import { tt } from './i18n'        // for user-visible strings
-import './oui-[name].styl'         // import stylesheet directly
-
-defineProps<{
-  mode?: 'info' | 'warn' | 'error'
-  title?: string
-}>()
-
-const emit = defineEmits<{ close: [] }>()
-const show = defineModel<boolean>({ default: true })
-</script>
+```bash
+pnpm add oui-kit
 ```
 
-### Stylus pattern
+Some components require optional dependencies:
+
+| Component              | Optional dependency                                                                                                                                              |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OuiDay`, `OuiDayRange` | `v-calendar`                                                                                                                                                     |
+| `OuiRichtext`          | `@tiptap/vue-3`, `@tiptap/pm`, `@tiptap/starter-kit`, `@tiptap/extension-underline`, `@tiptap/extension-placeholder`, `@tiptap/extension-mention`, `@tiptap/suggestion` |
+
+## Basic usage
+
+```ts
+import { OuiButton, OuiInput, OuiCheckbox } from 'oui-kit'
+import 'oui-kit/css'
+```
+
+Or use Stylus presets for more control:
 
 ```styl
-@require "../../stylus/index.styl";   // always first line
+@require "oui-kit/default-app"   // full app preset
+@require "oui-kit/default-basic" // minimal preset
+@require "oui-kit/theme"         // just CSS variables
+```
 
-.oui-[name] {
-  padding: rex(12);                   // rex() ≈ px, converts to rem
-  border-radius: var(--input-radius, 4px);
+## Key conventions to know
 
-  &._modifier { }    // modifiers use underscore prefix
-  &-part { }         // sub-elements follow BEM-like naming
-}
+- **v-model**: Components use Vue 3 `defineModel()` - standard `v-model` binding works
+- **CSS variables**: Theming via `--[level]-[style]-[state]` (e.g. `--p1-fg`, `--input-border-hover`)
+- **Dark mode**: Add `.dark` class to `<html>` - never use `@media (prefers-color-scheme: dark)`
+- **CSS classes**: Components use `oui-[name]` classes, modifiers use underscore prefix (`._active`, `._disabled`)
+- **Strings/i18n**: User-visible strings go through `t('Fallback', 'oui.component.key')`
 
-/* dark mode — always .dark selector, never @media prefers-color-scheme */
-.dark .oui-[name] { }
+## Component patterns
 
-/* transitions for Vue <Transition name="oui-[name]"> */
-.oui-[name]-enter-active,
-.oui-[name]-leave-active { transition: opacity 0.2s ease; }
-.oui-[name]-enter-from,
-.oui-[name]-leave-to { opacity: 0; }
+### Form components
+
+All form components support `title`, `description`, `required`, `disabled`, and `id` props via the shared `OuiFormItem` wrapper:
+
+```vue
+<OuiInput v-model="name" title="Name" description="Help text" required />
+```
+
+### Floating UI
+
+Tooltips, menus, and popovers are built on `@floating-ui/vue`:
+
+```vue
+<OuiFloat placement="bottom" close>
+  <template #click>
+    <button>Open</button>
+  </template>
+  <div>Floating content</div>
+</OuiFloat>
+```
+
+### Modals
+
+Programmatic modals and dialogs:
+
+```ts
+import { ouiAlert, ouiConfirm } from 'oui-kit'
+
+await ouiAlert('Something happened')
+const ok = await ouiConfirm('Are you sure?')
 ```

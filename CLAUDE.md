@@ -102,19 +102,91 @@ const log: LoggerInterface = Logger('filename-without-suffix')
 - **Browser-only tests**: `*.browser.spec.ts`
 - **E2E tests**: `tests/e2e/*.e2e.spec.ts` + `lib/**/*.e2e.ts`, run with Playwright
 - **Demos**: `src/*.demo.vue` — auto-loaded sandbox for visual testing
+- Fix any test or type errors until the whole suite is green
+- Add or update tests for the code you change, even if nobody asked
+
+## Dev environment tips
+
+- Read JSDoc comments in source files (`lib/**/*.ts`) for inline API documentation
+- Run and examine demo files (`lib/basic/*.demo.vue`) to understand component usage
+- Run and examine test specs (`lib/**/*.spec.ts`) to understand expected behavior
 
 ## Adding a New Component
 
-Create files in `lib/basic/`: `oui-[name].vue`, `oui-[name].styl`, `oui-[name].md`, optionally `oui-[name].demo.vue` and `oui-[name].spec.ts`.
+### Files to create (in `lib/basic/`)
 
-Register in 4 places:
+| File | Required | Description |
+|------|----------|-------------|
+| `oui-[name].vue` | yes | Vue 3 component with `<script lang="ts" setup>` |
+| `oui-[name].styl` | yes | Stylus stylesheet |
+| `oui-[name].md` | yes | Markdown docs (props, events, slots, example) |
+| `oui-[name].demo.vue` | recommended | Interactive demo using `OuiDemo` wrapper |
+| `oui-[name].spec.ts` | for complex logic | Vitest unit test |
 
-1. `lib/basic/index.ts` — add export (alphabetical)
-2. `lib/basic/index.styl` — add `@require` (alphabetical)
-3. `COMPONENTS.md` — add documentation section
-4. `llms.txt` — add to docs list and module overview
+### Registration checklist (4 places)
 
-`lib/lib.ts` does **not** need changes — it re-exports `./basic` wholesale.
+1. **`lib/basic/index.ts`** - add export (keep alphabetical order):
+
+   ```ts
+   export { default as OuiName } from './oui-name.vue'
+   ```
+
+2. **`lib/basic/index.styl`** - add style import (keep alphabetical order):
+
+   ```styl
+   @require "./oui-name.styl";
+   ```
+
+3. **`COMPONENTS.md`** - add entry to the table of contents and a section with props table, events, slots, and usage example.
+
+4. **`llms.txt`** - two places:
+   - Documentation Files list: `- [lib/basic/oui-name.md](...): OuiName details`
+   - Module Overview Basic section: add component name to the correct category
+
+`lib/lib.ts` does **not** need changes - it re-exports `./basic` wholesale.
+
+### Vue component pattern
+
+```vue
+<script lang="ts" setup>
+import { tt } from './i18n'        // for user-visible strings
+import './oui-[name].styl'         // import stylesheet directly
+
+defineProps<{
+  mode?: 'info' | 'warn' | 'error'
+  title?: string
+}>()
+
+const emit = defineEmits<{ close: [] }>()
+const show = defineModel<boolean>({ default: true })
+</script>
+```
+
+### Stylus pattern
+
+```styl
+@require "../../stylus/index.styl";   // always first line
+
+.oui-[name] {
+  padding: rex(12);                   // rex() converts to rem
+  border-radius: var(--input-radius, 4px);
+
+  &._modifier { }    // modifiers use underscore prefix
+  &-part { }         // sub-elements follow BEM-like naming
+}
+
+.dark .oui-[name] { }  // dark mode: always .dark selector
+```
+
+## Documentation maintenance
+
+When adding, removing, or significantly changing components, composables, CSS variables, or theming:
+
+- **Update [COMPONENTS.md](COMPONENTS.md)**: Keep the props tables, events, slots, and examples accurate.
+- **Update [llms.txt](llms.txt)**: Keep the module overview and export lists in sync with `lib/lib.ts` and the module index files.
+- **Update [stylus/README.md](stylus/README.md)**: If CSS variables or naming conventions change.
+
+These files are the primary reference for AI assistants working in this project. Stale documentation is worse than no documentation.
 
 ## Git Conventions
 
@@ -127,7 +199,7 @@ Register in 4 places:
 
 - **`COMPONENTS.md`** — full component API reference (props, events, slots)
 - **`llms.txt`** — AI-optimized project overview and export lists
-- **`AGENTS.md`** — agent/AI development instructions
+- **`AGENTS.md`** — instructions for AI agents using oui-kit as a dependency
 - **`CONTRIBUTING.md`** — development guidelines
 - **`.github/copilot-instructions.md`** — coding standards
 

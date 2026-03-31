@@ -18,6 +18,7 @@ import 'oui-kit/css'
   - [OuiInputColor](#ouiinputcolor)
   - [OuiInputGroup](#ouiinputgroup)
   - [OuiTextarea](#ouitextarea)
+  - [OuiRichtext](#ouirichtext)
   - [OuiPassword](#ouipassword)
   - [OuiCheckbox](#ouicheckbox)
   - [OuiSelect](#ouiselect)
@@ -226,6 +227,48 @@ import { OuiTextarea } from 'oui-kit'
 
 ```vue
 <OuiTextarea v-model="notes" title="Notes" :rows="5" />
+```
+
+---
+
+### OuiRichtext
+
+Rich text editor based on [TipTap](https://tiptap.dev/). Requires optional TipTap dependencies (see [oui-richtext.md](lib/basic/oui-richtext.md)). Looks like OuiTextarea with inline formatting via a floating toolbar on text selection and @-mention placeholders.
+
+```ts
+import { OuiRichtext } from 'oui-kit'
+```
+
+**Props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `modelValue` | `string` | - | v-model value (HTML string) |
+| `title` | `string` | - | Label text |
+| `description` | `string` | - | Help text |
+| `placeholder` | `string` | - | Placeholder text when empty |
+| `mentions` | `string[]` | - | Available @-mention suggestions |
+| `bordered` | `boolean` | `true` | Show standard input border |
+| `disabled` | `boolean` | `false` | Disables the editor |
+| `required` | `boolean` | `false` | Mark as required |
+| `id` | `string` | - | ID attribute |
+
+**Slots**
+
+| Slot | Description |
+|------|-------------|
+| `title` | Custom title content |
+| `description` | Custom description content |
+
+**Example**
+
+```vue
+<OuiRichtext
+  v-model="html"
+  title="Message"
+  placeholder="Write something..."
+  :mentions="['Vorname', 'Nachname', 'Email']"
+/>
 ```
 
 ---

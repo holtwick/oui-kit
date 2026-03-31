@@ -53,10 +53,7 @@
   "types": "./dist/lib/lib.d.ts",
   "files": [
     "*.md",
-    "AGENTS.md",
-    "CONTRIBUTING.md",
     "LICENSE",
-    "README.md",
     "dist/**/*",
     "lib/**/*",
     "llms.txt",

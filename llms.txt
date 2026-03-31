@@ -7,6 +7,12 @@
 - License: MIT
 - Live demo: https://oui.holtwick.de
 
+## Further Reading
+
+- [AGENTS.md](AGENTS.md): Instructions for AI agents using oui-kit as a dependency
+- [COMPONENTS.md](COMPONENTS.md): Full component API reference (props, events, slots, examples)
+- [CONTRIBUTING.md](CONTRIBUTING.md): Development guidelines
+
 ## Installation
 
 ```bash
@@ -48,6 +54,7 @@ import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
 - [lib/basic/oui-resizeable.md](lib/basic/oui-resizeable.md): OuiResizeable details
 - [lib/basic/oui-day.md](lib/basic/oui-day.md): OuiDay details
 - [lib/basic/oui-day-range.md](lib/basic/oui-day-range.md): OuiDayRange details
+- [lib/basic/oui-richtext.md](lib/basic/oui-richtext.md): OuiRichtext details (TipTap rich text editor)
 - [lib/float/oui-float.md](lib/float/oui-float.md): OuiFloat / floating UI details
 - [lib/float/README.md](lib/float/README.md): Float module overview
 - [lib/modal/oui-modal.md](lib/modal/oui-modal.md): OuiModal details
@@ -61,7 +68,7 @@ import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
 
 ### Basic (`import { ... } from 'oui-kit'`)
 
-Form inputs: OuiInput, OuiInputNumber, OuiInputColor, OuiInputGroup, OuiPassword, OuiTextarea, OuiCheckbox, OuiSelect, OuiCombobox, OuiSegmented, OuiFile, OuiDate, OuiDatetime, OuiDay, OuiDayRange, OuiStars, OuiSlidingPill
+Form inputs: OuiInput, OuiInputNumber, OuiInputColor, OuiInputGroup, OuiPassword, OuiTextarea, OuiRichtext, OuiCheckbox, OuiSelect, OuiCombobox, OuiSegmented, OuiFile, OuiDate, OuiDatetime, OuiDay, OuiDayRange, OuiStars, OuiSlidingPill
 Display: OuiButton, OuiAlert, OuiCard, OuiText, OuiNotice, OuiSeparator, OuiItems, OuiTable, OuiTableview, OuiVirtualList, OuiLog, OuiQrcode, OuiWait
 Utilities: OuiDebug, OuiDemo, OuiDark, OuiClose, OuiFormItem, OuiPasswordMeter
 Advanced: OuiDraggable, OuiResizeable, OuiLoginCreate, OuiLogin
