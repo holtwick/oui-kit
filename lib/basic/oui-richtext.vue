@@ -20,9 +20,11 @@ const props = withDefaults(defineProps<{
   mentions?: string[]
   bordered?: boolean
   allowCustomMentions?: boolean
+  blocks?: boolean
 }>(), {
   bordered: true,
   allowCustomMentions: true,
+  blocks: false,
 })
 
 const emit = defineEmits<{
@@ -274,13 +276,13 @@ async function initEditor() {
     editable: !props.disabled,
     extensions: [
       StarterKit.configure({
-        heading: false,
-        codeBlock: false,
-        blockquote: false,
-        bulletList: false,
-        orderedList: false,
-        listItem: false,
-        horizontalRule: false,
+        heading: props.blocks ? { levels: [1, 2, 3] } : false,
+        codeBlock: props.blocks,
+        blockquote: props.blocks,
+        bulletList: props.blocks,
+        orderedList: props.blocks,
+        listItem: props.blocks,
+        horizontalRule: props.blocks,
       }),
       Underline,
       Placeholder.configure({

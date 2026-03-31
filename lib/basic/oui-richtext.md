@@ -21,6 +21,7 @@ The component looks and behaves like `OuiTextarea` with autosize. It provides in
 | `mentions` | `string[]` | `undefined` | List of available mention/placeholder names for the `@` suggestion dropdown. |
 | `bordered` | `boolean` | `true` | Show the standard input border (same as OuiInput/OuiTextarea). Set to `false` for custom styling. |
 | `allowCustomMentions` | `boolean` | `true` | Allow typing custom mentions not in the `mentions` list. A "+ name" option appears in the dropdown. Set to `false` to restrict to predefined mentions only. |
+| `blocks` | `boolean` | `false` | Enable block-level formatting: headings (H1-H3), bullet/ordered lists, blockquote, code block, horizontal rule. When `false`, only inline styles (bold, italic, underline) are available. Changing this prop requires re-mounting the component (use `:key`). |
 
 ## Events
 
@@ -90,6 +91,18 @@ const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
   :mentions="mentions"
 />
 ```
+
+### With block formatting
+
+```vue
+<OuiRichtext
+  v-model="html"
+  blocks
+  :mentions="mentions"
+/>
+```
+
+Markdown shortcuts: `# `, `## `, `### ` for headings, `- ` or `* ` for bullet lists, `1. ` for ordered lists, `> ` for blockquote, `` ``` `` for code block, `---` for horizontal rule.
 
 ### Disabled
 

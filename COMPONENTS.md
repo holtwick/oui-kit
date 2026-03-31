@@ -250,6 +250,7 @@ import { OuiRichtext } from 'oui-kit'
 | `mentions` | `string[]` | - | Available @-mention suggestions |
 | `bordered` | `boolean` | `true` | Show standard input border |
 | `allowCustomMentions` | `boolean` | `true` | Allow typing custom mentions not in the list |
+| `blocks` | `boolean` | `false` | Enable headings, lists, blockquote, code block, horizontal rule |
 | `disabled` | `boolean` | `false` | Disables the editor |
 | `required` | `boolean` | `false` | Mark as required |
 | `id` | `string` | - | ID attribute |
