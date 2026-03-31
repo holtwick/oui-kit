@@ -276,13 +276,13 @@ async function initEditor() {
     editable: !props.disabled,
     extensions: [
       StarterKit.configure({
-        heading: props.blocks ? { levels: [1, 2, 3] } : false,
-        codeBlock: props.blocks,
-        blockquote: props.blocks,
-        bulletList: props.blocks,
-        orderedList: props.blocks,
-        listItem: props.blocks,
-        horizontalRule: props.blocks,
+        heading: props.blocks ? { levels: [1, 2, 3] as const } : false,
+        codeBlock: props.blocks ? {} : false,
+        blockquote: props.blocks ? {} : false,
+        bulletList: props.blocks ? {} : false,
+        orderedList: props.blocks ? {} : false,
+        listItem: props.blocks ? {} : false,
+        horizontalRule: props.blocks ? {} : false,
       }),
       Underline,
       Placeholder.configure({
