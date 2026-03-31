@@ -1,20 +1,12 @@
 @require "../../stylus/index.styl";
 
 .oui-richtext {
-  oui-form();
-
-  &._bordered {
-    oui-input-default();
-    display: block;
-    padding: 0;
-    min-height: auto;
-  }
-
   .tiptap {
     outline: none;
     min-height: rex(80);
     padding: rex(8) rex(12);
     line-height: 1.4;
+    margin: 0;
 
     strong {
       font-weight: bold;
@@ -44,6 +36,14 @@
       pointer-events: none;
       height: 0;
     }
+  }
+
+  &._bordered {
+    oui-form();
+    oui-input-default();
+    display: block;
+    padding: 0;
+    min-height: auto;
   }
 
   &._disabled {
@@ -136,4 +136,8 @@
       color: var(--p1-fg);
     }
   }
+}
+
+.oui-richtext:not(._bordered) .tiptap {
+  padding: 0;
 }

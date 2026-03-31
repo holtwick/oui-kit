@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { OuiDemo, OuiRichtext } from '../lib'
+import { OuiCheckbox, OuiDemo, OuiInput, OuiRichtext } from '../lib'
 
 const state = reactive({
   value: '<p>Hello <strong>World</strong></p>',
   title: 'Rich Text',
+  description: 'Markiere Text fuer Formatierung. Tippe @ fuer Platzhalter.',
   placeholder: 'Schreibe etwas...',
   disabled: false,
+  required: false,
+  bordered: true,
 })
 
 const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
@@ -17,8 +20,21 @@ const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
     <OuiRichtext
       v-model="state.value"
       :title="state.title"
+      :description="state.description"
       :placeholder="state.placeholder"
       :disabled="state.disabled"
+      :required="state.required"
+      :bordered="state.bordered"
+      :mentions="mentions"
+    />
+  </div>
+
+  <div>
+    <OuiRichtext
+      v-model="state.value"
+      title="Ohne Rahmen"
+      description="bordered=false"
+      :bordered="false"
       :mentions="mentions"
     />
   </div>
@@ -29,6 +45,11 @@ const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
   </div>
 
   <OuiDemo :state="state">
-    <OuiRichtext v-model="state.value" title="value (editable)" />
+    <OuiInput v-model="state.title" title="title" />
+    <OuiInput v-model="state.description" title="description" />
+    <OuiInput v-model="state.placeholder" title="placeholder" />
+    <OuiCheckbox v-model="state.disabled" switch title="disabled" />
+    <OuiCheckbox v-model="state.required" switch title="required" />
+    <OuiCheckbox v-model="state.bordered" switch title="bordered" />
   </OuiDemo>
 </template>
