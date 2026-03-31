@@ -93,8 +93,6 @@ zerva-bin/bin.cjs
 # .vscode
 # .vscode/launch.json
 
-# _archive
-
 *.sqlite
 *.tsbuildinfo
 

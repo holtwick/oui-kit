@@ -19,15 +19,17 @@ const props = withDefaults(defineProps<{
   placeholder?: string
   mentions?: string[]
   bordered?: boolean
+  allowCustomMentions?: boolean
 }>(), {
   bordered: true,
+  allowCustomMentions: true,
 })
-
-const model = defineModel<string | undefined>({ required: true })
 
 const emit = defineEmits<{
   mention: [value: string]
 }>()
+
+const model = defineModel<string | undefined>({ required: true })
 
 // Async TipTap imports (optional dependency)
 const EditorContent = defineAsyncComponent(async () => (await import('@tiptap/vue-3')).EditorContent)
@@ -126,14 +128,36 @@ const { floatingStyles: mentionFloatingStyles } = useFloating(mentionReference, 
 
 const filteredMentions = computed(() => {
   const q = mentionQuery.value.toLowerCase()
-  return mentionItems.value.filter(item => item.toLowerCase().includes(q))
+  return mentionItems.value.filter(item => item !== '__custom__' && item.toLowerCase().includes(q))
 })
 
+const showCustomOption = computed(() => {
+  if (!props.allowCustomMentions || !mentionQuery.value.trim())
+    return false
+  const q = mentionQuery.value.toLowerCase()
+  return !filteredMentions.value.some(item => item.toLowerCase() === q)
+})
+
+const totalItems = computed(() => filteredMentions.value.length + (showCustomOption.value ? 1 : 0))
+
 function selectMention(index: number) {
+  if (index === filteredMentions.value.length && showCustomOption.value) {
+    selectCustomMention()
+    return
+  }
   const item = filteredMentions.value[index]
   if (item && mentionCommand.value) {
     mentionCommand.value({ id: item })
     mentionListVisible.value = false
+  }
+}
+
+function selectCustomMention() {
+  const name = mentionQuery.value.trim()
+  if (name && mentionCommand.value) {
+    mentionCommand.value({ id: name })
+    mentionListVisible.value = false
+    emit('mention', name)
   }
 }
 
@@ -157,11 +181,16 @@ async function initEditor() {
 
   const mentionSuggestion: Partial<typeof Suggestion> = {
     char: '@',
+    allowSpaces: true,
     items: ({ query }: { query: string }) => {
       mentionQuery.value = query
-      return (props.mentions ?? []).filter(item =>
+      const filtered = (props.mentions ?? []).filter(item =>
         item.toLowerCase().includes(query.toLowerCase()),
       )
+      // Return at least a placeholder so TipTap keeps the dropdown open for custom input
+      if (filtered.length === 0 && props.allowCustomMentions && query.trim())
+        return ['__custom__']
+      return filtered
     },
     render: () => {
       return {
@@ -210,12 +239,13 @@ async function initEditor() {
         },
         onKeyDown: (renderProps: any) => {
           const { event } = renderProps
+          const total = totalItems.value
           if (event.key === 'ArrowDown') {
-            mentionSelectedIndex.value = (mentionSelectedIndex.value + 1) % filteredMentions.value.length
+            mentionSelectedIndex.value = (mentionSelectedIndex.value + 1) % total
             return true
           }
           if (event.key === 'ArrowUp') {
-            mentionSelectedIndex.value = (mentionSelectedIndex.value - 1 + filteredMentions.value.length) % filteredMentions.value.length
+            mentionSelectedIndex.value = (mentionSelectedIndex.value - 1 + total) % total
             return true
           }
           if (event.key === 'Enter') {
@@ -356,7 +386,7 @@ onBeforeUnmount(() => {
     <teleport to="body">
       <Transition name="oui-richtext-toolbar-transition">
         <div
-          v-show="mentionListVisible && filteredMentions.length > 0"
+          v-show="mentionListVisible && totalItems > 0"
           ref="mentionFloating"
           class="oui-richtext-mentions"
           :style="mentionFloatingStyles"
@@ -370,6 +400,15 @@ onBeforeUnmount(() => {
             @mousedown.prevent="selectMention(index)"
           >
             {{ item }}
+          </button>
+          <button
+            v-if="showCustomOption"
+            type="button"
+            class="oui-richtext-mention-item _custom"
+            :class="{ _active: mentionSelectedIndex === filteredMentions.length }"
+            @mousedown.prevent="selectCustomMention"
+          >
+            + {{ mentionQuery }}
           </button>
         </div>
       </Transition>

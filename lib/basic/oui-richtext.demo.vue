@@ -10,9 +10,15 @@ const state = reactive({
   disabled: false,
   required: false,
   bordered: true,
+  allowCustomMentions: true,
 })
 
-const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
+const mentions = reactive(['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede'])
+
+function onMention(name: string) {
+  if (!mentions.includes(name))
+    mentions.push(name)
+}
 </script>
 
 <template>
@@ -25,11 +31,13 @@ const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
       :disabled="state.disabled"
       :required="state.required"
       :bordered="state.bordered"
+      :allow-custom-mentions="state.allowCustomMentions"
       :mentions="mentions"
+      @mention="onMention"
     />
   </div>
 
-  <div>
+  <!-- <div>
     <OuiRichtext
       v-model="state.value"
       title="Ohne Rahmen"
@@ -37,7 +45,7 @@ const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
       :bordered="false"
       :mentions="mentions"
     />
-  </div>
+  </div> -->
 
   <div style="margin-top: 1rem; padding: 1rem; background: var(--t3-bg); border-radius: 4px;">
     <strong>HTML Output:</strong>
@@ -51,5 +59,6 @@ const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
     <OuiCheckbox v-model="state.disabled" switch title="disabled" />
     <OuiCheckbox v-model="state.required" switch title="required" />
     <OuiCheckbox v-model="state.bordered" switch title="bordered" />
+    <OuiCheckbox v-model="state.allowCustomMentions" switch title="allowCustomMentions" />
   </OuiDemo>
 </template>

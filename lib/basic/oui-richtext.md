@@ -20,6 +20,13 @@ The component looks and behaves like `OuiTextarea` with autosize. It provides in
 | `placeholder` | `string` | `undefined` | Placeholder text shown when the editor is empty. |
 | `mentions` | `string[]` | `undefined` | List of available mention/placeholder names for the `@` suggestion dropdown. |
 | `bordered` | `boolean` | `true` | Show the standard input border (same as OuiInput/OuiTextarea). Set to `false` for custom styling. |
+| `allowCustomMentions` | `boolean` | `true` | Allow typing custom mentions not in the `mentions` list. A "+ name" option appears in the dropdown. Set to `false` to restrict to predefined mentions only. |
+
+## Events
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `mention` | `string` | Emitted when a custom mention is created (the new name). Use this to update the `mentions` list. |
 
 ## Models
 
@@ -43,6 +50,8 @@ Select text to reveal a floating toolbar with Bold, Italic, and Underline button
 ### Mentions / Placeholders
 
 Type `@` to open a dropdown with available placeholders. Navigate with arrow keys and confirm with Enter. The list is filtered as you type. Mentions are rendered as inline tags in the editor.
+
+If `allowCustomMentions` is `true` (default), typing a name that is not in the list shows a "+ name" option at the bottom. Selecting it creates the mention and emits the `mention` event so the parent can update the list.
 
 The generated HTML for a mention looks like:
 

@@ -249,9 +249,16 @@ import { OuiRichtext } from 'oui-kit'
 | `placeholder` | `string` | - | Placeholder text when empty |
 | `mentions` | `string[]` | - | Available @-mention suggestions |
 | `bordered` | `boolean` | `true` | Show standard input border |
+| `allowCustomMentions` | `boolean` | `true` | Allow typing custom mentions not in the list |
 | `disabled` | `boolean` | `false` | Disables the editor |
 | `required` | `boolean` | `false` | Mark as required |
 | `id` | `string` | - | ID attribute |
+
+**Events**
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `mention` | `string` | Emitted when a custom mention is created |
 
 **Slots**
 
