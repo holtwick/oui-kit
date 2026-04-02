@@ -46,7 +46,9 @@ import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
 - [lib/basic/oui-text.md](lib/basic/oui-text.md): OuiText details
 - [lib/basic/oui-notice.md](lib/basic/oui-notice.md): OuiNotice details
 - [lib/basic/oui-log.md](lib/basic/oui-log.md): OuiLog details
+- [lib/basic/oui-combobox.md](lib/basic/oui-combobox.md): OuiCombobox details
 - [lib/basic/oui-file.md](lib/basic/oui-file.md): OuiFile details
+- [lib/basic/oui-input-tags.md](lib/basic/oui-input-tags.md): OuiInputTags details
 - [lib/basic/oui-login.md](lib/basic/oui-login.md): OuiLogin details
 - [lib/basic/oui-dark.md](lib/basic/oui-dark.md): OuiDark details
 - [lib/basic/oui-virtual-list.md](lib/basic/oui-virtual-list.md): OuiVirtualList details
@@ -68,7 +70,7 @@ import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
 
 ### Basic (`import { ... } from 'oui-kit'`)
 
-Form inputs: OuiInput, OuiInputNumber, OuiInputColor, OuiInputGroup, OuiPassword, OuiTextarea, OuiRichtext, OuiCheckbox, OuiSelect, OuiCombobox, OuiSegmented, OuiFile, OuiDate, OuiDatetime, OuiDay, OuiDayRange, OuiStars, OuiSlidingPill
+Form inputs: OuiInput, OuiInputNumber, OuiInputColor, OuiInputGroup, OuiInputTags, OuiPassword, OuiTextarea, OuiRichtext, OuiCheckbox, OuiSelect, OuiCombobox, OuiSegmented, OuiFile, OuiDate, OuiDatetime, OuiDay, OuiDayRange, OuiStars, OuiSlidingPill
 Display: OuiButton, OuiAlert, OuiCard, OuiText, OuiNotice, OuiSeparator, OuiItems, OuiTable, OuiTableview, OuiVirtualList, OuiLog, OuiQrcode, OuiWait
 Utilities: OuiDebug, OuiDemo, OuiDark, OuiClose, OuiFormItem, OuiPasswordMeter
 Advanced: OuiDraggable, OuiResizeable, OuiLoginCreate, OuiLogin
