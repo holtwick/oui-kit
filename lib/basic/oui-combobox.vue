@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { LoggerInterface } from 'zeed'
 import type { OuiSelectItem } from './_types'
-import { computed, ref, watch } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 import { isNumber, isString, Logger, promisify, uuid } from 'zeed'
 import OuiFloat from '../float/oui-float.vue'
 import { tt } from './i18n'
@@ -17,64 +17,61 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    /** HTML `id` attribute of input element */
     id?: string
     title?: string
     description?: string
     required?: boolean
 
     /** Suggestions */
-    items: (OuiSelectFilterItem | string | number)[] // (string | number | Item | any)[]
+    items: (OuiSelectItem | string | number)[]
 
-    /** HTML input field placeholder */
     placeholder?: string
-
-    /** Show trailing select field icon. Default: false  */
     selectIcon?: boolean
-    // openOnFocus?: boolean
-
-    /** Show clear button if there is content */
     clearable?: boolean
-
     disabled?: boolean
 
-    //
-
     formatValue?: (value: any) => string
-
     parseValue?: (value: string) => any
-
-    //
 
     /** Allow to create new item, return its id */
     addItemAction?: (title: string) => any
-
-    /** The text of the add item */
     addItemTitle?: string
-
     addItemClass?: string
-
     addItemFooter?: boolean
+
+    /** Clear input text after selecting an item */
+    clearOnSelection?: boolean
   }>(),
   {
     id: uuid(),
     placeholder: '',
     selectIcon: false,
-    // openOnFocus: true,
     clearable: false,
     addItemFooter: false,
     disabled: false,
+    clearOnSelection: false,
   },
 )
 
-const emit = defineEmits([
-  'change',
-  'deleteLast',
-])
-
-interface OuiSelectFilterItem extends OuiSelectItem { }
+const emit = defineEmits<{
+  change: [value: string | number | undefined]
+  deleteLast: []
+}>()
 
 const log: LoggerInterface = Logger('oui-combobox')
+
+// Resolve translate function during setup (inject must not be called inside computed)
+const translateFn = inject('t', null) as ((id: string, ...args: any) => string) | null
+
+function translateAddTitle(value: string): string {
+  const key = props.addItemTitle ?? 'ui.combobox.addTitle'
+  if (translateFn) {
+    const result = translateFn(key, value)
+    if (result !== key)
+      return result
+  }
+  return `Add "${value}"`
+}
 
 const model = defineModel({ required: true })
 
@@ -87,40 +84,25 @@ const inputValue = ref<string>('')
 const applyFilter = ref(false)
 
 const sourceItems = computed<OuiSelectItem[]>(() => {
-  return Object.values(props.items ?? []).map((item) => {
+  return (props.items ?? []).map((item) => {
     if (isString(item) || isNumber(item)) {
-      const title = props.formatValue?.(item as any) ?? String(item)
       return {
         id: String(item),
-        title,
+        title: props.formatValue?.(item as any) ?? String(item),
       }
     }
     return item
   })
 })
 
-// todo: sort weight like: the smaller indexOf, the better
-// todo: use fuzzy search?
-// todo: highlight matches?
-const filteredItems = computed<OuiSelectFilterItem[]>(() => {
-  let items = Object.values(sourceItems.value).map((item) => {
-    if (isString(item) || isNumber(item)) {
-      const title = props.formatValue?.(item as any) ?? ''
-      return {
-        id: item,
-        title,
-      }
-    }
-    return item
-  })
+const filteredItems = computed<OuiSelectItem[]>(() => {
+  let items = [...sourceItems.value]
 
   if (applyFilter.value) {
-    log('filter', inputValue.value)
     const value = inputValue.value.trim()
     const lvalue = value.toLowerCase()
     let exactMatch = false
 
-    // Filter items
     items = items.filter((item) => {
       if (value) {
         if (item.title.toLowerCase() === lvalue)
@@ -137,64 +119,56 @@ const filteredItems = computed<OuiSelectFilterItem[]>(() => {
       return true
     })
 
-    log('exactMatch', exactMatch)
-
     if (value && !exactMatch) {
       if (props.addItemAction) {
         const addItem: any = {
           action: () => {
-            if (props.addItemAction) {
-              promisify(props.addItemAction(value)).then(id =>
-                setModelValue(id),
-              )
-            }
+            promisify(props.addItemAction!(value)).then(id =>
+              setModelValue(id),
+            )
           },
-          title: tt(props.addItemTitle ?? 'Add entry', props.addItemTitle ?? 'ui.combobox.addTitle', [value]), //  ??
+          title: translateAddTitle(value),
           class: props.addItemClass ?? 'oui-combobox-item-add',
           skipSelection: items.length > 0,
-          // id: '_create',
         }
-        if (props.addItemFooter === true)
+        if (props.addItemFooter)
           items.push(addItem)
         else
           items.unshift(addItem)
       }
       else if (props.formatValue && props.parseValue) {
-        const value = props.parseValue(inputValue.value ?? '')
-        if (value) {
-          const addItem = {
-            title: props.formatValue(value),
-            id: value,
+        const parsed = props.parseValue(inputValue.value ?? '')
+        if (parsed) {
+          items.unshift({
+            title: props.formatValue(parsed),
+            id: parsed,
             class: props.addItemClass ?? 'oui-combobox-item-preview',
-          }
-          items.unshift(addItem)
+          })
         }
       }
     }
   }
 
-  return items as OuiSelectFilterItem[]
+  return items
 })
 
 function updateInputValue() {
-  log('did change value', model.value)
-
   if (props.formatValue)
     inputValue.value = props.formatValue(model.value) ?? ''
   else
-    inputValue.value = sourceItems.value.find((item: OuiSelectItem) => item.id === model.value)?.title ?? ''
+    inputValue.value = sourceItems.value.find(item => item.id === model.value)?.title ?? ''
 }
 
-/** If model value changes update the represented value */
 watch(model, updateInputValue, { immediate: true })
 
 function setModelValue(value: string | number | undefined) {
-  log('set modelValue', value)
   emit('change', value)
-  if (model.value !== value) {
+  if (model.value !== value)
     model.value = value
-  }
-  updateInputValue()
+  if (props.clearOnSelection)
+    inputValue.value = ''
+  else
+    updateInputValue()
 }
 
 function doMove(delta: number, e?: KeyboardEvent) {
@@ -207,20 +181,16 @@ function doMove(delta: number, e?: KeyboardEvent) {
 }
 
 function doSelectItemByClickOnList(item: any) {
-  log('doSelectItem', item)
   if (item.action)
     item.action(inputValue.value)
   else
     setModelValue(item.id)
   showPopover.value = false
-  // focus.value = false
 }
 
 function doSelect(closePopover: boolean = true) {
-  log('doSelect', selected.value, filteredItems.value[selected.value])
   const item = filteredItems.value[selected.value]
   if (!item) {
-    log('doSelect: no item selected', selected.value, filteredItems.value)
     setModelValue(undefined)
     return
   }
@@ -236,13 +206,9 @@ function doSelect(closePopover: boolean = true) {
 function doDeleteLast(ev: Event) {
   if (inputValue.value?.length === 0) {
     ev.preventDefault()
-    doClear()
+    showPopover.value = false
     emit('deleteLast')
   }
-}
-
-function doClear() {
-  showPopover.value = false
 }
 
 function doInput() {
@@ -252,11 +218,9 @@ function doInput() {
 }
 
 function doBlur() {
-  log('blur', focus.value, document.activeElement)
   if (focus.value === true) {
     focus.value = false
     if (inputValue.value.trim().length === 0) {
-      log('input empty')
       setModelValue(undefined)
     }
     else if (props.parseValue) {
@@ -266,7 +230,6 @@ function doBlur() {
       const item = filteredItems.value[selected.value]
       if (item?.id)
         setModelValue(item.id)
-      // else keep previous one
     }
     updateInputValue()
     showPopover.value = false
@@ -274,7 +237,6 @@ function doBlur() {
 }
 
 function doFocus() {
-  log('focus')
   applyFilter.value = false
   focus.value = true
   showPopover.value = true
@@ -287,12 +249,9 @@ function doFocus() {
 
 <template>
   <OuiFormItem :id="id" :title="title" :description="description" :required="required">
-    <!-- Conditionally pass the title slot -->
     <template v-if="$slots.title" #title>
       <slot name="title" />
     </template>
-
-    <!-- Conditionally pass the description slot -->
     <template v-if="$slots.description" #description>
       <slot name="description" />
     </template>
@@ -318,7 +277,7 @@ function doFocus() {
         @input="doInput"
         @keydown.down="doMove(+1, $event)"
         @keydown.up="doMove(-1, $event)"
-        @keydown.esc="doClear"
+        @keydown.esc="showPopover = false"
         @keydown.enter="doSelect(true)"
         @keydown.backspace="doDeleteLast"
       >
@@ -330,7 +289,7 @@ function doFocus() {
         <OuiClose />
       </div>
       <div v-if="selectIcon" class="oui-combobox-select-icon" />
-      <slot name="after" class="completion-after" />
+      <slot name="after" />
       <OuiFloat
         v-model="showPopover"
         :reference="target"
@@ -355,7 +314,7 @@ function doFocus() {
             @pointerup="showPopover = false"
             @action="doSelectItemByClickOnList"
           >
-            <slot name="item" :item="(item as OuiSelectItem | OuiSelectFilterItem)">
+            <slot name="item" :item="(item as OuiSelectItem)">
               {{ item.title }}&nbsp;
             </slot>
           </OuiItems>

@@ -23,6 +23,7 @@ import 'oui-kit/css'
   - [OuiCheckbox](#ouicheckbox)
   - [OuiSelect](#ouiselect)
   - [OuiCombobox](#ouicombobox)
+  - [OuiInputTags](#ouiinputtags)
   - [OuiSegmented](#ouisegmented)
   - [OuiFile](#ouifile)
   - [OuiDate / OuiDatetime](#ouidate--ouidatetime)
@@ -379,14 +380,95 @@ import { OuiCombobox } from 'oui-kit'
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `modelValue` | `string \| number` | – | v-model selected id |
-| `items` | `OuiSelectItem[]` | – | Available options |
+| `items` | `(OuiSelectItem \| string \| number)[]` | – | Available options |
 | `title` | `string` | – | Label text |
-| `placeholder` | `string` | – | Search placeholder |
+| `description` | `string` | – | Description below label |
+| `required` | `boolean` | – | Mark as required |
+| `placeholder` | `string` | `''` | Search placeholder |
+| `selectIcon` | `boolean` | `false` | Show trailing select arrow |
+| `clearable` | `boolean` | `false` | Show clear button when value is set |
+| `disabled` | `boolean` | `false` | Disable input |
+| `formatValue` | `(value: any) => string` | – | Format model value for display |
+| `parseValue` | `(value: string) => any` | – | Parse input text back to model value |
+| `addItemAction` | `(title: string) => any` | – | Callback to create a new item; return the new id |
+| `addItemTitle` | `string` | – | i18n key for the "add item" label |
+| `addItemClass` | `string` | – | CSS class for the "add item" entry |
+| `addItemFooter` | `boolean` | `false` | Show "add item" at bottom instead of top |
+| `clearOnSelection` | `boolean` | `false` | Clear input after selecting (useful for tag inputs) |
+
+**Events**
+
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `change` | `string \| number \| undefined` | Fired when value changes |
+| `deleteLast` | – | Fired on Backspace with empty input |
+
+**Slots**
+
+| Slot | Props | Description |
+|------|-------|-------------|
+| `before` | – | Content before the input (e.g. tags) |
+| `after` | – | Content after the input |
+| `item` | `{ item: OuiSelectItem }` | Custom rendering for dropdown items |
+| `header` | – | Content above the dropdown list |
+| `footer` | – | Content below the dropdown list |
+| `empty` | – | Content when no items match |
+| `title` | – | Custom title slot (forwarded to OuiFormItem) |
+| `description` | – | Custom description slot (forwarded to OuiFormItem) |
+
+**Examples**
+
+```vue
+<!-- Basic -->
+<OuiCombobox v-model="userId" :items="users" title="User" placeholder="Search..." />
+
+<!-- Clearable -->
+<OuiCombobox v-model="userId" :items="users" clearable />
+
+<!-- With addItemAction -->
+<OuiCombobox v-model="value" :items="items" :add-item-action="onAdd" clearable />
+
+<!-- With formatValue / parseValue -->
+<OuiCombobox
+  v-model="percent"
+  :items="[5, 7, 16, 19]"
+  :format-value="v => v != null ? `${v} %` : ''"
+  :parse-value="v => Number.parseInt(v, 10)"
+/>
+```
+
+---
+
+### OuiInputTags
+
+Tag input field with autocomplete. Wraps `OuiCombobox` to allow selecting multiple items as tags.
+
+```ts
+import { OuiInputTags } from 'oui-kit'
+```
+
+**Props**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `modelValue` | `string[]` | `[]` | v-model array of selected tag ids |
+| `items` | `(OuiSelectItem \| string)[]` | – | Available tags to choose from |
+| `title` | `string` | – | Label text |
+| `placeholder` | `string` | `''` | Input placeholder (hidden when tags exist) |
+| `disabled` | `boolean` | `false` | Disable input |
+| `addItemAction` | `(title: string) => any` | – | Callback to create new items; return the new id |
+| `addItemTitle` | `string` | – | Label for "add item" entry in dropdown |
+
+**Slots**
+
+| Slot | Props | Description |
+|------|-------|-------------|
+| `item` | `{ item: OuiSelectItem }` | Custom rendering for dropdown items |
 
 **Example**
 
 ```vue
-<OuiCombobox v-model="userId" :items="users" title="User" placeholder="Search..." />
+<OuiInputTags v-model="selectedFruits" :items="fruits" title="Fruits" placeholder="Add fruit..." />
 ```
 
 ---

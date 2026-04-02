@@ -1,0 +1,50 @@
+@require "../../stylus/index.styl";
+
+.oui-input-tags {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rex(4);
+  padding: rex(4) rex(8);
+  min-height: var(--input-height, px(32));
+
+  .oui-combobox-input {
+    min-width: rex(60);
+  }
+
+  &._blur .oui-combobox-input {
+    min-width: rex(1);
+  }
+
+  &-tag {
+    display: inline-flex;
+    align-items: center;
+    height: rex(22);
+    line-height: rex(20);
+    font-size: rex(13);
+    background: var(--t3-bg);
+    color: var(--fg);
+    border-radius: rex(3);
+    padding-left: rex(8);
+    white-space: nowrap;
+
+    &-remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.6;
+      cursor: pointer;
+      padding-left: rex(2);
+      padding-right: rex(4);
+
+      &:hover {
+        opacity: 1;
+      }
+
+      svg {
+        width: rex(14);
+        height: rex(14);
+        stroke-width: 2.5;
+      }
+    }
+  }
+}

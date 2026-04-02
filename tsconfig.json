@@ -7,7 +7,6 @@
       "DOM.Iterable"
     ],
     "useDefineForClassFields": true,
-    "baseUrl": ".",
     "rootDir": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
