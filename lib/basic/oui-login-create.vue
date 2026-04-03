@@ -96,5 +96,8 @@ function handleCreate() {
         </div>
       </div>
     </template>
+    <template v-if="$slots.footer" #footer>
+      <slot name="footer" />
+    </template>
   </OuiNotice>
 </template>

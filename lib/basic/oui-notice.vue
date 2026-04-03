@@ -42,6 +42,9 @@ watch(root, (el) => {
           <div v-if="$slots.default" class="oui-notice-message">
             <slot />
           </div>
+          <div v-if="$slots.footer" class="oui-notice-footer">
+            <slot name="footer" />
+          </div>
         </div>
       </div>
     </Teleport>
@@ -59,6 +62,9 @@ watch(root, (el) => {
         </div>
         <div v-if="$slots.default" class="oui-notice-message">
           <slot />
+        </div>
+        <div v-if="$slots.footer" class="oui-notice-footer">
+          <slot name="footer" />
         </div>
       </div>
     </div>

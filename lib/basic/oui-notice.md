@@ -16,6 +16,7 @@ A prominent notice/overlay component for warnings, errors, or important messages
 | `(default)` | Message body content. |
 | `title` | Custom title content. Falls back to the `title` prop. |
 | `icon` | SVG icon shown above the title. |
+| `footer` | Content below the message body, e.g. links or secondary actions. |
 
 ## CSS Variables
 
@@ -37,6 +38,14 @@ A prominent notice/overlay component for warnings, errors, or important messages
     <svg>…</svg>
   </template>
   Something went wrong.
+</OuiNotice>
+
+<!-- With footer slot -->
+<OuiNotice title="Login">
+  Please sign in.
+  <template #footer>
+    Need help? <a href="/support">Contact support</a>
+  </template>
 </OuiNotice>
 
 <!-- Full-screen cover overlay with focus trap -->

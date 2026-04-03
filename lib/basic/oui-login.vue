@@ -77,5 +77,8 @@ function handleLogin() {
         </OuiButton>
       </div>
     </div>
+    <template v-if="$slots.footer" #footer>
+      <slot name="footer" />
+    </template>
   </OuiNotice>
 </template>

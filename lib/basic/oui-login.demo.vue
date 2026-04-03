@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { reactive } from 'vue'
-import { OuiCheckbox, OuiDemo, OuiInput, OuiLogin } from '@/lib'
+import { reactive, ref } from 'vue'
+import { OuiCheckbox, OuiDemo, OuiInput, OuiLogin, OuiLoginCreate } from '@/lib'
+import OuiText from './oui-text.vue'
 
 const state = reactive({
   title: 'Sign In',
@@ -10,6 +11,8 @@ const state = reactive({
   password: '',
   loggedInAs: '',
 })
+
+const view = ref<'login' | 'create'>('login')
 
 async function handleLogin(username: string, password: string) {
   state.username = username
@@ -34,6 +37,11 @@ function handleLogout() {
   state.loggedInAs = ''
   state.error = ''
 }
+
+function handleCreate(username: string, _password: string) {
+  state.loggedInAs = username
+  view.value = 'login'
+}
 </script>
 
 <template>
@@ -50,10 +58,26 @@ function handleLogout() {
     </button>
   </div>
   <OuiLogin
-    v-else
+    v-else-if="view === 'login'"
     :title="state.title"
     :checking="state.checking"
     :error="state.error || undefined"
     @login="handleLogin"
-  />
+  >
+    <template #footer>
+      <OuiText>
+        No account yet? <a href="#" @click.prevent="view = 'create'">Create Account</a>
+      </OuiText>
+    </template>
+  </OuiLogin>
+  <OuiLoginCreate
+    v-else
+    @create="handleCreate"
+  >
+    <template #footer>
+      <OuiText>
+        Already have an account? <a href="#" @click.prevent="view = 'login'">Login</a>
+      </OuiText>
+    </template>
+  </OuiLoginCreate>
 </template>

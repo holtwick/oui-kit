@@ -192,7 +192,6 @@ These files are the primary reference for AI assistants working in this project.
 
 - Commit messages: lowercase, prefixed with `feat:`, `fix:`, or `chore:`
 - Dependency-only changes: `chore: updated dependencies`
-- PR title format: `[oui] <Title>`
 - Run `pnpm lint:fix && pnpm test -- --run` before committing
 
 ## Key Documentation Files
