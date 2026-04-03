@@ -101,7 +101,7 @@
   "dependencies": {
     "@floating-ui/vue": "^1.1.11",
     "@vueuse/core": "^14.2.1",
-    "vue": "^3.5.31",
+    "vue": "^3.5.32",
     "zeed": "^1.3.1"
   },
   "optionalDependencies": {
