@@ -105,6 +105,13 @@
       margin: rex(12) 0;
     }
 
+    a {
+      color: var(--p1-fg);
+      text-decoration: underline;
+      cursor: text;
+      pointer-events: none;
+    }
+
     // Placeholder
     p.is-editor-empty:first-child::before {
       content: attr(data-placeholder);
@@ -126,6 +133,12 @@
   &._disabled {
     opacity: 0.6;
     pointer-events: none;
+  }
+
+  &-link {
+    color: var(--p1-fg);
+    text-decoration: underline;
+    cursor: pointer;
   }
 
   &-mention {
@@ -170,6 +183,21 @@
 
       &._active {
         background: rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    &-input {
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      border-radius: rex(4);
+      color: var(--n0-50, white);
+      font-size: rex(13);
+      padding: rex(4) rex(8);
+      outline: none;
+      min-width: rex(160);
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
       }
     }
 

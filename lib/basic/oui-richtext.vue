@@ -21,10 +21,12 @@ const props = withDefaults(defineProps<{
   bordered?: boolean
   allowCustomMentions?: boolean
   blocks?: boolean
+  links?: boolean
 }>(), {
   bordered: true,
   allowCustomMentions: true,
   blocks: false,
+  links: true,
 })
 
 const emit = defineEmits<{
@@ -67,6 +69,83 @@ function toggleUnderline() {
   editor.value?.chain().focus().toggleUnderline().run()
 }
 
+// Link editing state
+const linkEditing = ref(false)
+const linkUrl = ref('')
+
+function selectLinkRange(ed: Editor) {
+  const { from } = ed.state.selection
+  const $pos = ed.state.doc.resolve(from)
+  const markType = ed.schema.marks.link
+  let start = from
+  let end = from
+  while (start > $pos.start()) {
+    const prev = ed.state.doc.resolve(start)
+    if (!markType.isInSet(prev.nodeBefore?.marks ?? []))
+      break
+    start--
+  }
+  while (end < $pos.end()) {
+    const next = ed.state.doc.resolve(end)
+    if (!markType.isInSet(next.nodeAfter?.marks ?? []))
+      break
+    end++
+  }
+  ed.commands.setTextSelection({ from: start, to: end })
+}
+
+function startLinkEdit() {
+  const ed = editor.value
+  if (!ed)
+    return
+
+  // Select entire link text when cursor is inside a link
+  if (ed.isActive('link')) {
+    selectLinkRange(ed)
+    linkUrl.value = ed.getAttributes('link').href ?? ''
+  }
+  else {
+    linkUrl.value = ''
+  }
+
+  // Need selection for toolbar positioning - update after potential range change
+  nextTick(() => {
+    updateToolbar()
+    linkEditing.value = true
+    nextTick(() => {
+      const input = document.querySelector('.oui-richtext-toolbar input') as HTMLInputElement
+      input?.focus()
+      input?.select()
+    })
+  })
+}
+
+function confirmLink() {
+  const ed = editor.value
+  const url = linkUrl.value.trim()
+  if (!ed || !url) {
+    cancelLinkEdit()
+    return
+  }
+
+  const href = /^https?:\/\//.test(url) ? url : `https://${url}`
+  ed.chain().focus().setLink({ href }).run()
+  linkEditing.value = false
+  linkUrl.value = ''
+}
+
+function cancelLinkEdit() {
+  linkEditing.value = false
+  linkUrl.value = ''
+  editor.value?.commands.focus()
+}
+
+function removeLink() {
+  editor.value?.chain().focus().unsetLink().run()
+  linkEditing.value = false
+  linkUrl.value = ''
+}
+
 // Selection-based floating toolbar
 function updateToolbar() {
   const ed = editor.value
@@ -103,6 +182,8 @@ function updateToolbar() {
 
 function hideToolbar() {
   toolbarVisible.value = false
+  linkEditing.value = false
+  linkUrl.value = ''
   if (toolbarReference.value && toolbarReference.value !== editorElement.value) {
     toolbarReference.value.remove()
     toolbarReference.value = undefined
@@ -165,19 +246,22 @@ function selectCustomMention() {
 
 // Initialize editor
 async function initEditor() {
-  const [
-    { Editor },
-    { default: StarterKit },
-    { default: Placeholder },
-    { default: Mention },
-    { default: Suggestion },
-  ] = await Promise.all([
+  const imports = [
     import('@tiptap/vue-3'),
     import('@tiptap/starter-kit'),
     import('@tiptap/extension-placeholder'),
     import('@tiptap/extension-mention'),
     import('@tiptap/suggestion'),
-  ])
+    props.links ? import('@tiptap/extension-link') : undefined,
+  ] as const
+
+  const results = await Promise.all(imports)
+  const { Editor } = results[0]
+  const { default: StarterKit } = results[1]
+  const { default: Placeholder } = results[2]
+  const { default: Mention } = results[3]
+  const { default: Suggestion } = results[4]
+  const Link = results[5]?.default
 
   const mentionSuggestion: Partial<typeof Suggestion> = {
     char: '@',
@@ -291,6 +375,16 @@ async function initEditor() {
         },
         suggestion: mentionSuggestion as any,
       }),
+      ...(Link
+        ? [Link.configure({
+            openOnClick: false,
+            autolink: true,
+            linkOnPaste: true,
+            HTMLAttributes: {
+              class: 'oui-richtext-link',
+            },
+          })]
+        : []),
     ],
     onUpdate: ({ editor: ed }) => {
       const html = ed.getHTML()
@@ -300,8 +394,11 @@ async function initEditor() {
       nextTick(updateToolbar)
     },
     onBlur: () => {
-      // Delay to allow toolbar click
-      setTimeout(hideToolbar, 200)
+      // Delay to allow toolbar click; keep toolbar open during link editing
+      setTimeout(() => {
+        if (!linkEditing.value)
+          hideToolbar()
+      }, 200)
     },
   })
 }
@@ -356,27 +453,55 @@ onBeforeUnmount(() => {
           :style="floatingStyles"
           @mousedown.prevent
         >
-          <button
-            type="button"
-            :class="{ _active: editor?.isActive('bold') }"
-            @click="toggleBold"
-          >
-            <strong>B</strong>
-          </button>
-          <button
-            type="button"
-            :class="{ _active: editor?.isActive('italic') }"
-            @click="toggleItalic"
-          >
-            <em>I</em>
-          </button>
-          <button
-            type="button"
-            :class="{ _active: editor?.isActive('underline') }"
-            @click="toggleUnderline"
-          >
-            <u>U</u>
-          </button>
+          <template v-if="!linkEditing">
+            <button
+              type="button"
+              :class="{ _active: editor?.isActive('bold') }"
+              @click="toggleBold"
+            >
+              <strong>B</strong>
+            </button>
+            <button
+              type="button"
+              :class="{ _active: editor?.isActive('italic') }"
+              @click="toggleItalic"
+            >
+              <em>I</em>
+            </button>
+            <button
+              type="button"
+              :class="{ _active: editor?.isActive('underline') }"
+              @click="toggleUnderline"
+            >
+              <u>U</u>
+            </button>
+            <button
+              v-if="links"
+              type="button"
+              :class="{ _active: editor?.isActive('link') }"
+              @click="startLinkEdit"
+            >
+              &#128279;
+            </button>
+          </template>
+          <template v-else>
+            <input
+              v-model="linkUrl"
+              class="oui-richtext-toolbar-input"
+              placeholder="https://..."
+              @keydown.enter.prevent="confirmLink"
+              @keydown.escape.prevent="cancelLinkEdit"
+            >
+            <button type="button" @click="confirmLink">
+              &#10003;
+            </button>
+            <button v-if="editor?.isActive('link')" type="button" @click="removeLink">
+              &#128465;
+            </button>
+            <button type="button" @click="cancelLinkEdit">
+              &#10005;
+            </button>
+          </template>
         </div>
       </Transition>
     </teleport>

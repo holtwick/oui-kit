@@ -12,6 +12,7 @@ const state = reactive({
   bordered: true,
   allowCustomMentions: true,
   blocks: false,
+  links: true,
 })
 
 const mentions = reactive(['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede'])
@@ -25,7 +26,7 @@ function onMention(name: string) {
 <template>
   <div>
     <OuiRichtext
-      :key="`blocks-${state.blocks}`"
+      :key="`blocks-${state.blocks}-links-${state.links}`"
       v-model="state.value"
       :title="state.title"
       :description="state.description"
@@ -35,6 +36,7 @@ function onMention(name: string) {
       :bordered="state.bordered"
       :allow-custom-mentions="state.allowCustomMentions"
       :blocks="state.blocks"
+      :links="state.links"
       :mentions="mentions"
       @mention="onMention"
     />
@@ -64,5 +66,6 @@ function onMention(name: string) {
     <OuiCheckbox v-model="state.bordered" switch title="bordered" />
     <OuiCheckbox v-model="state.allowCustomMentions" switch title="allowCustomMentions" />
     <OuiCheckbox v-model="state.blocks" switch title="blocks" />
+    <OuiCheckbox v-model="state.links" switch title="links" />
   </OuiDemo>
 </template>

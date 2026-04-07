@@ -234,7 +234,7 @@ import { OuiTextarea } from 'oui-kit'
 
 ### OuiRichtext
 
-Rich text editor based on [TipTap](https://tiptap.dev/). Requires optional TipTap dependencies (see [oui-richtext.md](lib/basic/oui-richtext.md)). Looks like OuiTextarea with inline formatting via a floating toolbar on text selection and @-mention placeholders.
+Rich text editor based on [TipTap](https://tiptap.dev/). Requires optional TipTap dependencies (see [oui-richtext.md](lib/basic/oui-richtext.md)). Looks like OuiTextarea with inline formatting (bold, italic, underline, links) via a floating toolbar on text selection and @-mention placeholders.
 
 ```ts
 import { OuiRichtext } from 'oui-kit'
@@ -252,6 +252,7 @@ import { OuiRichtext } from 'oui-kit'
 | `bordered` | `boolean` | `true` | Show standard input border |
 | `allowCustomMentions` | `boolean` | `true` | Allow typing custom mentions not in the list |
 | `blocks` | `boolean` | `false` | Enable headings, lists, blockquote, code block, horizontal rule |
+| `links` | `boolean` | `true` | Enable hyperlink support via link button in floating toolbar |
 | `disabled` | `boolean` | `false` | Disables the editor |
 | `required` | `boolean` | `false` | Mark as required |
 | `id` | `string` | - | ID attribute |

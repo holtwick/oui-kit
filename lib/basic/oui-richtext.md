@@ -3,10 +3,10 @@
 A rich text editor component based on [TipTap](https://tiptap.dev/). It uses the external TipTap packages as optional dependencies. Make sure to add them to your app's `package.json`:
 
 ```bash
-pnpm add @tiptap/vue-3 @tiptap/pm @tiptap/starter-kit @tiptap/extension-placeholder @tiptap/extension-mention @tiptap/suggestion
+pnpm add @tiptap/vue-3 @tiptap/pm @tiptap/starter-kit @tiptap/extension-placeholder @tiptap/extension-mention @tiptap/suggestion @tiptap/extension-link
 ```
 
-The component looks and behaves like `OuiTextarea` with autosize. It provides inline formatting (Bold, Italic, Underline) via a floating toolbar that appears when text is selected. Placeholders can be inserted by typing `@` which opens a suggestion dropdown.
+The component looks and behaves like `OuiTextarea` with autosize. It provides inline formatting (Bold, Italic, Underline, Link) via a floating toolbar that appears when text is selected. Placeholders can be inserted by typing `@` which opens a suggestion dropdown.
 
 ## Props
 
@@ -22,6 +22,7 @@ The component looks and behaves like `OuiTextarea` with autosize. It provides in
 | `bordered` | `boolean` | `true` | Show the standard input border (same as OuiInput/OuiTextarea). Set to `false` for custom styling. |
 | `allowCustomMentions` | `boolean` | `true` | Allow typing custom mentions not in the `mentions` list. A "+ name" option appears in the dropdown. Set to `false` to restrict to predefined mentions only. |
 | `blocks` | `boolean` | `false` | Enable block-level formatting: headings (H1-H3), bullet/ordered lists, blockquote, code block, horizontal rule. When `false`, only inline styles (bold, italic, underline) are available. Changing this prop requires re-mounting the component (use `:key`). |
+| `links` | `boolean` | `true` | Enable hyperlink support. A link button appears in the floating toolbar. Select text, click the link button, and enter a URL. Requires `@tiptap/extension-link`. Set to `false` to disable. |
 
 ## Events
 
@@ -46,7 +47,17 @@ The component looks and behaves like `OuiTextarea` with autosize. It provides in
 
 ### Floating Toolbar
 
-Select text to reveal a floating toolbar with Bold, Italic, and Underline buttons. The toolbar is positioned via `@floating-ui/vue` and disappears when the selection is cleared.
+Select text to reveal a floating toolbar with Bold, Italic, Underline, and Link buttons. The toolbar is positioned via `@floating-ui/vue` and disappears when the selection is cleared.
+
+### Hyperlinks
+
+Select text and click the link button to add a hyperlink. The toolbar switches to a URL input field. Press Enter to confirm or Escape to cancel. Clicking the link button when the cursor is inside an existing link selects the full link text and shows the URL for editing. A trash button allows removing the link. URLs without a protocol get `https://` prepended automatically. Pasting a URL onto selected text also creates a link automatically.
+
+The generated HTML for a link:
+
+```html
+<a href="https://example.com" class="oui-richtext-link">Link text</a>
+```
 
 ### Mentions / Placeholders
 
@@ -103,6 +114,16 @@ const mentions = ['Vorname', 'Nachname', 'Email', 'Firma', 'Anrede']
 ```
 
 Markdown shortcuts: `# `, `## `, `### ` for headings, `- ` or `* ` for bullet lists, `1. ` for ordered lists, `> ` for blockquote, `` ``` `` for code block, `---` for horizontal rule.
+
+### Without links
+
+```vue
+<OuiRichtext
+  v-model="html"
+  :links="false"
+  :mentions="mentions"
+/>
+```
 
 ### Disabled
 
