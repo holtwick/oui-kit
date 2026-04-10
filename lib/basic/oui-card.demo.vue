@@ -16,6 +16,13 @@ const state = reactive({
       Hello
     </OuiCard>
 
+    <OuiCard>
+      <template #title>
+        <div>Slot title</div>
+      </template>
+      Hello
+    </OuiCard>
+
     <OuiCard title="Collapsible Card" collapsible>
       <OuiInput v-model="state.text" label="Text input" title="Sample" description="Some text" required />
       <OuiCheckbox v-model="state.checked" label="Check me" title="Sample">

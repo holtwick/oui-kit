@@ -43,6 +43,7 @@ import { OuiButton, OuiModal, OuiInput, useNotification } from 'oui-kit'
 - [COMPONENTS.md](COMPONENTS.md): Full component API reference (props, events, slots, examples)
 - [lib/basic/oui-alert.md](lib/basic/oui-alert.md): OuiAlert details
 - [lib/basic/oui-button.md](lib/basic/oui-button.md): OuiButton details
+- [lib/basic/oui-card.md](lib/basic/oui-card.md): OuiCard details
 - [lib/basic/oui-text.md](lib/basic/oui-text.md): OuiText details
 - [lib/basic/oui-notice.md](lib/basic/oui-notice.md): OuiNotice details
 - [lib/basic/oui-log.md](lib/basic/oui-log.md): OuiLog details

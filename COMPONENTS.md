@@ -603,18 +603,22 @@ import { OuiSlidingPill } from 'oui-kit'
 
 ### OuiCard
 
-Container with a card style (border, shadow, padding).
+Container with card styling (border, shadow, padding). Supports optional header, footer, and collapsible behavior with persistent state.
 
 ```ts
 import { OuiCard } from 'oui-kit'
 ```
 
-**Slots:** `default` – card content
+**Props:** `title`, `collapsible`, `collapsed`, `hideArrow`, `name` (persists collapsed state in localStorage)
+
+**Slots:** `default`, `header`, `title`, `footer`
+
+See [lib/basic/oui-card.md](lib/basic/oui-card.md) for full docs.
 
 **Example**
 
 ```vue
-<OuiCard>
+<OuiCard title="Settings" collapsible name="settings">
   <p>Card content here</p>
 </OuiCard>
 ```
