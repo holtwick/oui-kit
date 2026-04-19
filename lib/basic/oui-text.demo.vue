@@ -239,19 +239,37 @@ site.write(htmlPath, $.html())
       </thead>
       <tbody>
         <tr>
-          <td data-label="Name"><code>title</code></td>
-          <td data-label="Type"><code>string</code></td>
-          <td data-label="Description">The title of the entry.</td>
+          <td data-label="Name">
+            <code>title</code>
+          </td>
+          <td data-label="Type">
+            <code>string</code>
+          </td>
+          <td data-label="Description">
+            The title of the entry.
+          </td>
         </tr>
         <tr>
-          <td data-label="Name"><code>count</code></td>
-          <td data-label="Type"><code>number</code></td>
-          <td data-label="Description">How many items the entry contains.</td>
+          <td data-label="Name">
+            <code>count</code>
+          </td>
+          <td data-label="Type">
+            <code>number</code>
+          </td>
+          <td data-label="Description">
+            How many items the entry contains.
+          </td>
         </tr>
         <tr>
-          <td data-label="Name"><code>active</code></td>
-          <td data-label="Type"><code>boolean</code></td>
-          <td data-label="Description">Whether the entry is currently active.</td>
+          <td data-label="Name">
+            <code>active</code>
+          </td>
+          <td data-label="Type">
+            <code>boolean</code>
+          </td>
+          <td data-label="Description">
+            Whether the entry is currently active.
+          </td>
         </tr>
       </tbody>
     </table>
