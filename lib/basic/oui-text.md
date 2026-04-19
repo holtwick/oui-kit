@@ -4,13 +4,15 @@ A styled `<div>` wrapper that applies Oui's typography preset to its content. Us
 
 ## Props
 
-None. All content is passed via the default slot.
+| Name                | Type      | Default | Description                                                                                                                                                                                              |
+|---------------------|-----------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `responsiveTables`  | `boolean` | `false` | On viewports ≤600px, stack table cells vertically and hide `<thead>`. Add a `data-label` attribute to each `<td>` to show a column label above the cell value. Opt-in because it rewrites table layout.  |
 
 ## Slots
 
-| Slot | Description |
-|------|-------------|
-| `(default)` | Any HTML or Vue content. The following elements are styled automatically: headings (`h1`–`h6`), `b`, `u`, `i`, `a`, `ul`, `ol`, `li`, `pre`, `code`, `hr`. |
+| Slot        | Description                                                                                                                                                      |
+|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `(default)` | Any HTML or Vue content. The following elements are styled automatically: headings (`h1`–`h6`), `b`, `u`, `i`, `a`, `ul`, `ol`, `li`, `pre`, `code`, `hr`, `table`. |
 
 ## Example
 

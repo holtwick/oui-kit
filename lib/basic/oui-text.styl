@@ -3,3 +3,38 @@
 :where(.oui-text) {
   oui-text();
 }
+
+.oui-text._responsive-tables {
+  @media -media-mobile {
+    table {
+      display: block;
+      width: 100%;
+      overflow-x: visible;
+
+      thead {
+        display: none;
+      }
+
+      tbody, tr, td {
+        display: block;
+        width: 100%;
+      }
+
+      tr {
+        border-bottom: 2px solid var(--s2-fg);
+        padding: rex(8) 0;
+      }
+
+      tbody td {
+        border: none;
+        padding: rex(2) 0;
+
+        &:before {
+          content: attr(data-label);
+          font-weight: var(--text-font-weight-bold);
+          display: block;
+        }
+      }
+    }
+  }
+}

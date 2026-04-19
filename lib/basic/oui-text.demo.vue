@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { OuiText } from '@/lib'
+import { reactive } from 'vue'
+import { OuiCheckbox, OuiDemo, OuiText } from '@/lib'
+
+const state = reactive({
+  responsiveTables: true,
+})
 </script>
 
 <template>
-  <OuiText>
+  <OuiText :responsive-tables="state.responsiveTables">
     <h1>Text</h1>
 
     <h1 class="blog-post-title">
@@ -217,5 +222,41 @@ site.write(htmlPath, $.html())
     </ol>
     <p>Paragraph Paragraph Paragraph</p>
     <pre>print(123)</pre>
+
+    <h2>Table</h2>
+    <p>
+      The following table stacks vertically on small viewports when
+      <code>responsiveTables</code> is enabled. Each <code>td</code> uses a
+      <code>data-label</code> attribute that is shown above the value.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Name"><code>title</code></td>
+          <td data-label="Type"><code>string</code></td>
+          <td data-label="Description">The title of the entry.</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><code>count</code></td>
+          <td data-label="Type"><code>number</code></td>
+          <td data-label="Description">How many items the entry contains.</td>
+        </tr>
+        <tr>
+          <td data-label="Name"><code>active</code></td>
+          <td data-label="Type"><code>boolean</code></td>
+          <td data-label="Description">Whether the entry is currently active.</td>
+        </tr>
+      </tbody>
+    </table>
   </OuiText>
+  <OuiDemo :state="state">
+    <OuiCheckbox v-model="state.responsiveTables" switch title="responsiveTables" />
+  </OuiDemo>
 </template>
